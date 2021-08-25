@@ -1,0 +1,9 @@
+{
+    "python.pythonPath": "/usr/local/bin/python3",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "workbench.colorTheme": "Code Blue",
+    "jupyter.jupyterServerType": "local",
+    "jupyter.jupyterCommandLineArguments": []
+}

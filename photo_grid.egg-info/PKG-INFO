@@ -1,0 +1,21 @@
+Metadata-Version: 1.2
+Name: photo-grid
+<<<<<<< HEAD
+Version: 1.2.15
+=======
+Version: 1.2.14
+>>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
+Summary: A GUI for field segmentation
+Home-page: https://github.com/Poissonfish/GRID
+Author: James Chen
+Author-email: chun-peng.chen@wsu.edu
+License: GPLv3
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows :: Windows 10
+Requires-Python: >=3.6

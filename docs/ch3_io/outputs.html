@@ -1,0 +1,859 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Outputs &mdash; GRID 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/google_analytics.js"></script>
+        <script src="https://www.googletagmanager.com/gtag/js?id=UA-151005724-3"></script>
+        <script src="https://buttons.github.io/buttons.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Customize Vegetation Indices" href="../ch4_adv/custom_index.html" />
+    <link rel="prev" title="Inputs" href="inputs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/GRID_banner.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">GATTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ch1_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch1_started/firsttime.html">First-Time Users</a></li>
+</ul>
+<p class="caption"><span class="caption-text">INTERFACE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ch2_interface/load.html">Load Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch2_interface/aoi.html">Define AOI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch2_interface/kmeans.html">Define POI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch2_interface/centroids.html">Detect Centroids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch2_interface/segmentation.html">Segmentation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">INPUTS/OUTPUTS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="inputs.html">Inputs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Outputs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tabular-results">Tabular results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#images-for-validations">Images for validations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shapefiles-outputs">Shapefiles (outputs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#numpy-format-of-aoi">NumPy format of AOI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#h5-dataset">H5 dataset</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">ADVANCED USAGE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ch4_adv/custom_index.html">Customize Vegetation Indices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch4_adv/seasons.html">Multi-Season Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch4_adv/qgis.html">Work with QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch4_adv/arbitrary.html">Deal with Arbitrary Field Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch4_adv/dl.html">Generate Datasets for Deep Learning</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GRID</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Outputs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/ch3_io/outputs.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="outputs">
+<h1>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tabular-results">
+<h2>Tabular results<a class="headerlink" href="#tabular-results" title="Permalink to this headline">¶</a></h2>
+<p>Extracted information for each plot is presented in a <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file.
+Below we will list the definition of each field:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>var</strong></dt><dd><p>Variety names, which are the IDs learned from the map file.
+ID will be “unnamed_xx” instead if there’s no map file provided.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>row</strong></dt><dd><p>Count from the toppest row of plots.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>column</strong></dt><dd><p>Count from the leftest column of plots.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>area_all</strong></dt><dd><p>Number of pixels in the segmented rectangle (red boundaries).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>area_veg</strong></dt><dd><p>Number of POI</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Vegetation indices are represented by the averaged value of the POI,
+and <code class="docutils literal notranslate"><span class="pre">xxx_std</span></code> is its corresponding standard deviation.
+Below are the formula of each index,
+the x<sup>th</sup> band will be labeled as b<sub>x</sub> :</p>
+<ul>
+<li><dl>
+<dt><strong>Normalized Difference Vegetation Index (NDVI)</strong></dt><dd><div class="math notranslate nohighlight">
+\[NDVI = \frac{(b_4 - b_1)}{(b_4 + b_1)}\]</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>Green Normalized Difference Vegetation Index (GNDVI)</strong></dt><dd><div class="math notranslate nohighlight">
+\[GNDVI = \frac{(b_4 - b_2)}{(b_4 + b_2)}\]</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>Combination of Normalized Difference Vegetation Index (CNDVI)</strong></dt><dd><div class="math notranslate nohighlight">
+\[CNDVI = \frac{(2 * b_4 - b_1 - b_2)}{(b_4 + b_1 + b_2)}\]</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>Ratio Vegetation Index (RVI)</strong></dt><dd><div class="math notranslate nohighlight">
+\[RVI = \frac{b_4}{b_1}\]</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>Green Ratio Vegetation Index (GRVI)</strong></dt><dd><div class="math notranslate nohighlight">
+\[GRVI = \frac{b_4}{b_2}\]</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>Normalized Difference Greenness Vegetation Index (NDGVI)</strong></dt><dd><div class="math notranslate nohighlight">
+\[NDGVI = \frac{(b_2 - b_1)}{(b_2 + b_1)}\]</div>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The channel values are recorded in this output as well.
+The <strong>averaged value</strong> of the x<sup>th</sup> channel and
+its <strong>standard deviation</strong> will be stored
+in the column of <code class="docutils literal notranslate"><span class="pre">ch_x</span></code> and <code class="docutils literal notranslate"><span class="pre">ch_x_std</span></code>, respectively.</p>
+</div>
+<div class="section" id="images-for-validations">
+<h2>Images for validations<a class="headerlink" href="#images-for-validations" title="Permalink to this headline">¶</a></h2>
+<p>Several images are exported for users to validate the results.
+The title of each sub-figure is its suffix:</p>
+<ul>
+<li><p><strong>Checked</strong> <a class="reference internal" href="../ch2_interface/segmentation.html#export-results"><span class="std std-ref">Simple output</span></a>:</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../_images/ck_out.png" src="../_images/ck_out.png" />
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>unchecked</strong> <a class="reference internal" href="../ch2_interface/segmentation.html#export-results"><span class="std std-ref">Simple output</span></a>:</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../_images/unck_out.png" src="../_images/unck_out.png" />
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="shapefiles-outputs">
+<h2>Shapefiles (outputs)<a class="headerlink" href="#shapefiles-outputs" title="Permalink to this headline">¶</a></h2>
+<p>The shapefile is generated by the Python package
+<a class="reference external" href="https://github.com/GeospatialPython/pyshp">PyShp</a> .
+Each record represent a segmented plot,
+containing coordinates of boundaries
+and all the attributes listed in the tabular results.
+The shapefile can be <cite>integrated to the analysis in QGIS &lt;ork with QGIS&gt;</cite>
+You can also fetch the attributes in Python,
+we use the first plot as an example:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># import PyShp</span>
+<span class="kn">import</span> <span class="nn">shapefile</span>
+
+<span class="c1"># load shapefile and get record</span>
+<span class="n">file_sp</span> <span class="o">=</span> <span class="n">shapefile</span><span class="o">.</span><span class="n">Reader</span><span class="p">(</span><span class="s2">&quot;GRID.shp&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># list attributes</span>
+<span class="n">file_sp</span><span class="o">.</span><span class="n">fields</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<p>[(‘DeletionFlag’, ‘C’, 1, 0),
+[‘var’, ‘C’, 20, 20],
+[‘row’, ‘N’, 10, 10],
+[‘col’, ‘N’, 10, 10], … …</p>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># demo with the first record</span>
+<span class="n">records</span> <span class="o">=</span> <span class="n">file_sp</span><span class="o">.</span><span class="n">shapeRecords</span><span class="p">()</span>
+<span class="n">first_plot</span> <span class="o">=</span> <span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># polygon coordinates</span>
+<span class="n">first_plot</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">points</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<p>[(1153.5487982819586, 154.80525925556415),</p>
+<p>(1222.2592755806982, 159.82284445357462),</p>
+<p>(1203.8125387566886, 194.30747345836616),</p>
+<p>(1135.102061457949, 189.2898882603557)]</p>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># attributes (exact the same as ones from the csv output)</span>
+<span class="n">first_plot</span><span class="o">.</span><span class="n">record</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<p>Record #0: [‘325’, 0.0, 0.0, 2584.0, 1359.0, 0.23869822, 0.12908907, nan,
+nan, 0.14441162, 0.07516949, 1.69628965, 0.47877022, 0.99999999, 0.0,
+0.23869822, 0.12908907, 36.2281089, 23.588658, 54.5069904, 22.4681228,
+29.9830757, 14.3784804, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0]</p>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you load the <code class="docutils literal notranslate"><span class="pre">.shp</span></code> file in Python,
+make sure you also have <code class="docutils literal notranslate"><span class="pre">.dbf</span></code> and <code class="docutils literal notranslate"><span class="pre">.shx</span></code>
+placed in the <strong>same location</strong> and sharing the <strong>same name</strong>.</p>
+</div>
+</div>
+<div class="section" id="numpy-format-of-aoi">
+<h2>NumPy format of AOI<a class="headerlink" href="#numpy-format-of-aoi" title="Permalink to this headline">¶</a></h2>
+<p>GRID will output the AOI you cropped from the step of <a class="reference internal" href="../ch2_interface/aoi.html#define-aoi"><span class="std std-ref">Define AOI</span></a>.
+The file is suffixed with <code class="docutils literal notranslate"><span class="pre">_image</span></code> and has an extension name <code class="docutils literal notranslate"><span class="pre">.npy</span></code>.
+It’s encoded as a
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html">numpy ndarray</a>
+and can be loaded in Python:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># load npy file</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;GRID_image.npy&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<p>(142, 214, 3)</p>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># plot the ndarray</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<p>&lt;matplotlib.image.AxesImage at 0x7f94a9e195d0&gt;</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/npy_plot.png"><img alt="../_images/npy_plot.png" src="../_images/npy_plot.png" style="width: 400px;" /></a>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="h5-dataset">
+<h2>H5 dataset<a class="headerlink" href="#h5-dataset" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only by <strong>unchecking</strong> the option <a class="reference internal" href="../ch2_interface/segmentation.html#export-results"><span class="std std-ref">Simple output</span></a>
+to obtain this file,
+as compressing plots into a hdf5 can sometimes be time-consuming.</p>
+</div>
+<p>Segmented plots are structured in
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html">numpy ndarrays</a>
+and are compressed in a
+<a class="reference external" href="https://www.hdfgroup.org/solutions/hdf5/">HDF5 file</a> .
+The file has an extension name <code class="docutils literal notranslate"><span class="pre">.h5</span></code> and you can load the file in Python via
+<a class="reference external" href="https://www.h5py.org/">H5py</a> :</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># imports</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">h5py</span> <span class="k">as</span> <span class="nn">h5</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># read h5 file in read mode and list all the plot IDs</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">h5</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s2">&quot;GRID.h5&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">keys</span><span class="p">());</span> <span class="n">ids</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<p>[‘plot_1’, ‘plot_2’, ‘plot_3’, ‘plot_4’,
+‘plot_5’, ‘plot_6’, ‘plot_7’, ‘plot_8’,
+‘plot_9’, ‘plot_10’, ‘plot_11’, ‘plot_12’]</p>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># plot all the segmented plots</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">ids</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../_images/h5.png"><img alt="../_images/h5.png" src="../_images/h5.png" style="width: 800px;" /></a>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># close the h5 file</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../ch4_adv/custom_index.html" class="btn btn-neutral float-right" title="Customize Vegetation Indices" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inputs.html" class="btn btn-neutral float-left" title="Inputs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Chunpeng James Chen.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

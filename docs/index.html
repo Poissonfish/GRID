@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GRID: Deal with Field Segmentations Elegantly &mdash; GRID 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/google_analytics.js"></script>
+        <script src="https://www.googletagmanager.com/gtag/js?id=UA-151005724-3"></script>
+        <script src="https://buttons.github.io/buttons.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="ch1_started/installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#">
+          
+
+          
+            
+            <img src="_static/GRID_banner.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">GATTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch1_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch1_started/firsttime.html">First-Time Users</a></li>
+</ul>
+<p class="caption"><span class="caption-text">INTERFACE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch2_interface/load.html">Load Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch2_interface/aoi.html">Define AOI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch2_interface/kmeans.html">Define POI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch2_interface/centroids.html">Detect Centroids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch2_interface/segmentation.html">Segmentation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">INPUTS/OUTPUTS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch3_io/inputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch3_io/outputs.html">Outputs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ADVANCED USAGE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch4_adv/custom_index.html">Customize Vegetation Indices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch4_adv/seasons.html">Multi-Season Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch4_adv/qgis.html">Work with QGIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch4_adv/arbitrary.html">Deal with Arbitrary Field Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch4_adv/dl.html">Generate Datasets for Deep Learning</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">GRID</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>GRID: Deal with Field Segmentations Elegantly</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="grid-deal-with-field-segmentations-elegantly">
+<h1>GRID: Deal with Field Segmentations Elegantly<a class="headerlink" href="#grid-deal-with-field-segmentations-elegantly" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-default">
+<img alt="_images/abstract.png" src="_images/abstract.png" />
+</div>
+<div class="figure align-default">
+<img alt="https://img.shields.io/pypi/dm/photo_grid.svg?label=pypi%20downloads&amp;logo=python&amp;logoColor=white" src="https://img.shields.io/pypi/dm/photo_grid.svg?label=pypi%20downloads&amp;logo=python&amp;logoColor=white" />
+</div>
+<div class="figure align-default">
+<img alt="https://img.shields.io/pypi/v/photo_grid.svg?label=pypi%20version&amp;logo=python&amp;logoColor=white" src="https://img.shields.io/pypi/v/photo_grid.svg?label=pypi%20version&amp;logo=python&amp;logoColor=white" />
+</div>
+<a class="github-button" href="https://github.com/poissonfish" data-size="large" data-show-count="true" aria-label="Follow @poissonfish on GitHub">Follow @poissonfish</a>
+<a class="github-button" href="https://github.com/poissonfish/GRID/subscription" data-icon="octicon-eye" data-size="large" data-show-count="true" aria-label="Watch poissonfish/GRID on GitHub">Watch</a>
+<a class="github-button" href="https://github.com/poissonfish/GRID" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star poissonfish/GRID on GitHub">Star</a>
+<a class="github-button" href="https://github.com/poissonfish/GRID/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="true" aria-label="Fork poissonfish/GRID on GitHub">Fork</a>
+<a class="github-button" href="https://github.com/poissonfish/GRID/issues" data-icon="octicon-issue-opened" data-size="large" data-show-count="true" aria-label="Issue poissonfish/GRID on GitHub">Issue</a><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Installation</strong>:
+<a class="reference internal" href="ch1_started/installation.html#step-1-python"><span class="std std-ref">Python 3</span></a> |
+<a class="reference internal" href="ch1_started/installation.html#step-2-rasterio"><span class="std std-ref">Rasterio</span></a> |
+<a class="reference internal" href="ch1_started/installation.html#step-3-install-grid-via-pypi"><span class="std std-ref">PyPI</span></a> |</p></li>
+<li><p><strong>First-time users</strong>:
+<a class="reference internal" href="ch1_started/firsttime.html#launch-grid"><span class="std std-ref">Launch GRID</span></a> |
+<a class="reference internal" href="ch1_started/firsttime.html#demo-mode"><span class="std std-ref">Demo mode</span></a> |
+<a class="reference internal" href="ch1_started/firsttime.html#work-with-your-images"><span class="std std-ref">Work with your images</span></a> |</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>File loading</strong>:
+<a class="reference internal" href="ch2_interface/load.html#input-files"><span class="std std-ref">Input files</span></a> |
+<a class="reference internal" href="ch2_interface/load.html#drag-and-drop"><span class="std std-ref">Drag and drop</span></a> |</p></li>
+<li><p><strong>Define AOI</strong>:
+<a class="reference internal" href="ch2_interface/aoi.html#draw-aoi"><span class="std std-ref">Draw AOI</span></a> |
+<a class="reference internal" href="ch2_interface/aoi.html#adjust-aoi"><span class="std std-ref">Adjust AOI</span></a> |</p></li>
+<li><p><strong>Define POI</strong>:
+<a class="reference internal" href="ch2_interface/kmeans.html#k-means-clustering-algorithm"><span class="std std-ref">K-Means clustering algorithm</span></a> |
+<a class="reference internal" href="ch2_interface/kmeans.html#binarization"><span class="std std-ref">Binarization</span></a> |
+<a class="reference internal" href="ch2_interface/kmeans.html#refine-poi"><span class="std std-ref">Refine POI</span></a> |
+<a class="reference internal" href="ch2_interface/kmeans.html#display-zoom"><span class="std std-ref">Display/Zoom</span></a> |</p></li>
+<li><p><strong>Detect centroids</strong>:
+<a class="reference internal" href="ch2_interface/centroids.html#major-axis"><span class="std std-ref">Major axis</span></a> |
+<a class="reference internal" href="ch2_interface/centroids.html#minor-axis"><span class="std std-ref">Minor axis</span></a> |
+<a class="reference internal" href="ch2_interface/centroids.html#centroid-adjustment"><span class="std std-ref">Centroid adjustment</span></a> |</p></li>
+<li><p><strong>Segmentation</strong>:
+<a class="reference internal" href="ch2_interface/segmentation.html#dynamic"><span class="std std-ref">Dynamic</span></a> |
+<a class="reference internal" href="ch2_interface/segmentation.html#fixed"><span class="std std-ref">Fixed</span></a> |
+<a class="reference internal" href="ch2_interface/segmentation.html#fine-tune-results"><span class="std std-ref">Fine-tune results</span></a> |
+<a class="reference internal" href="ch2_interface/segmentation.html#export-results"><span class="std std-ref">Export results</span></a> |</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="inputs-outputs">
+<h2>Inputs/Outputs<a class="headerlink" href="#inputs-outputs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Inputs</strong>:
+<a class="reference internal" href="ch3_io/inputs.html#images"><span class="std std-ref">Images</span></a> |
+<a class="reference internal" href="ch3_io/inputs.html#maps"><span class="std std-ref">Maps</span></a> |
+<a class="reference internal" href="ch3_io/inputs.html#shapefiles-inputs"><span class="std std-ref">Shapefiles</span></a> |</p></li>
+<li><p><strong>Outputs</strong>:
+<a class="reference internal" href="ch3_io/outputs.html#tabular-results"><span class="std std-ref">Tabular results</span></a> |
+<a class="reference internal" href="ch3_io/outputs.html#images-for-validations"><span class="std std-ref">Validation</span></a> |
+<a class="reference internal" href="ch3_io/outputs.html#shapefiles-outputs"><span class="std std-ref">Shapefiles</span></a> |
+<a class="reference internal" href="ch3_io/outputs.html#numpy-format-of-aoi"><span class="std std-ref">NumPy format of AOI</span></a> |
+<a class="reference internal" href="ch3_io/outputs.html#h5-dataset"><span class="std std-ref">H5 dataset</span></a> |</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="advanced-usage-jupyter-notebook">
+<h2>Advanced usage (Jupyter notebook)<a class="headerlink" href="#advanced-usage-jupyter-notebook" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="ch4_adv/custom_index.html#Customize-Vegetation-Indices"><span class="std std-ref">Customize Vegetation Indices</span></a></p></li>
+<li><p><a class="reference internal" href="ch4_adv/seasons.html#Multi-Season-Images"><span class="std std-ref">Multi-Season Images</span></a></p></li>
+<li><p><a class="reference internal" href="ch4_adv/qgis.html#work-with-qgis"><span class="std std-ref">Work with QGIS</span></a></p></li>
+<li><p><a class="reference internal" href="ch4_adv/arbitrary.html#deal-with-arbitrary-field-layout"><span class="std std-ref">Deal with Arbitrary Field Layout</span></a></p></li>
+<li><p><a class="reference internal" href="ch4_adv/dl.html#generate-datasets-for-deep-learning"><span class="std std-ref">Generate Datasets for Deep Learning</span></a></p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="how-to-cite-grid">
+<h2>How to cite GRID<a class="headerlink" href="#how-to-cite-grid" title="Permalink to this headline">¶</a></h2>
+<p>To cite GRID, you can:</p>
+<ul class="simple">
+<li><p>Import <a class="reference external" href="https://zzlab.net/GRID/GRID.bib">GRID.bib</a></p></li>
+<li><p>or manually key in the following info:</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@article{Chen and Zhang:2020,
+ author       = {Chunpeng James Chen and Zhiwu Zhang},
+ title        = {GRID: A Python Package for Field Plot Phenotyping Using Aerial Images},
+ month        = may,
+ year         = 2020,
+ journal      = {Remote Sensing},
+ volume       = 12,
+ issue        = 11,
+ pages        = 1697
+ doi          = {10.3390/rs12111697},
+ url          = {https://doi.org/10.3390/rs12111697}
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<p>Find any issue? Post it on
+<a class="reference external" href="https://github.com/Poissonfish/GRID/issues">GitHub</a>
+or contact <a class="reference external" href="mailto:chun-peng&#46;chen&#37;&#52;&#48;wsu&#46;edu">James Chen</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ch1_started/installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Chunpeng James Chen.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Console App",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": true,
+            "program": "${file}",
+            "externalConsole": true,
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit"
+            ],
+            "env": {},
+            "envFile": "${workspaceRoot}/.env",
+            "console": "integratedTerminal",
+            "python": "${command:python.interpreterPath}"
+            // "python": "/usr/local/bin/python3"
+            // "python": "${workspaceRoot}"
+        }
+    ]
+}
+
+// ${workspaceRoot}
