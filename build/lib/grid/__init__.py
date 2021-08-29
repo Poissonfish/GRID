@@ -1,11 +1,6 @@
 __author__ = "Chunpeng James Chen"
-<<<<<<< HEAD
 __version__ = "1.2.16"
 __update__ = "Aug 25, 2021"
-=======
-__version__ = "1.2.14"
-__update__ = "Feb 2, 2021"
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
 
 # imports
 import subprocess
@@ -30,13 +25,8 @@ if "__main__" not in sys.argv[0]:
         print("         as command-line version is not ready yet.")
     print("~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~")
     print("Recent update ")
-<<<<<<< HEAD
     print("    - Support images with huge dimensions (>32767)")
     print("    - Add CRS to shapefiles (.prj) ")
-=======
-    print("    - Add CRS to shapefiles (.prj) ")
-    print("    - Update user manual ")
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
     print("    - Support ESRI shapefile compatible in QGIS    ")
     print("~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~")
 
@@ -84,12 +74,9 @@ from .grid import *
 """
 Update Log
 
-<<<<<<< HEAD
 - Aug 25, 2021 (1.2.16)
     * Handle large images (pixel dimension > 32767)
 
-=======
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
 - Sep 28, 2020 (1.2.13)
     * Impore handling of floating-encoded images
 

@@ -11,17 +11,11 @@ from PyQt5.QtCore import QFile, QIODevice
 import h5py
 import rasterio
 import shapefile
-<<<<<<< HEAD
 import cv2
 
 
 # self import
 from .lib import find_small_shape, initProgress, updateProgress, pltImShow, pltSegPlot, recover_scale
-=======
-
-# self import
-from .lib import initProgress, updateProgress, pltImShow, pltSegPlot, recover_scale
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
 from .dir import Dir
 
 
@@ -89,16 +83,14 @@ def loadImg(path):
         crs = False
 
     rasObj.close()
-<<<<<<< HEAD
 
     # resize to avoid cv2 int16 limit (32767)
-    h, w = find_small_shape(npImg.shape)
+    h, w = find_small_shape(npImg.shape[:2])
     npImg = cv2.resize(npImg, (w, h))
+    print("")
     print("GRID: Image was reshaped to (%d, %d)" % (h, w))
 
     # return
-=======
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
     return npImg, transform, crs
 
 
@@ -281,16 +273,16 @@ def savePlot(grid, path, prefix="GRID", simple=True):
     if not simple:
         # raw-center
         pltSegPlot(grid.agents, grid.imgs.get("crop")[:, :, :3],
-                isCenter=True,
-                path=path, prefix=prefix, filename="_raw_centroid.png")
+                   isCenter=True,
+                   path=path, prefix=prefix, filename="_raw_centroid.png")
         # raw-frame
         pltSegPlot(grid.agents, grid.imgs.get("crop")[:, :, :3],
-                isRect=True,
-                path=path, prefix=prefix, filename="_raw_border.png")
+                   isRect=True,
+                   path=path, prefix=prefix, filename="_raw_border.png")
         # raw-both
         pltSegPlot(grid.agents, grid.imgs.get("crop")[:, :, :3],
-                isCenter=True, isRect=True,
-                path=path, prefix=prefix, filename="_raw_both.png")
+                   isCenter=True, isRect=True,
+                   path=path, prefix=prefix, filename="_raw_both.png")
 
     # cluster-none
     pltSegPlot(grid.agents, grid.imgs.get("kmean"),
@@ -298,16 +290,16 @@ def savePlot(grid, path, prefix="GRID", simple=True):
     if not simple:
         # cluster-center
         pltSegPlot(grid.agents, grid.imgs.get("kmean"),
-                  isCenter=True,
-                  path=path, prefix=prefix, filename="_kmeans_centroid.png")
+                   isCenter=True,
+                   path=path, prefix=prefix, filename="_kmeans_centroid.png")
         # cluster-frame
         pltSegPlot(grid.agents, grid.imgs.get("kmean"),
-                  isRect=True,
-                  path=path, prefix=prefix, filename="_kmeans_border.png")
+                   isRect=True,
+                   path=path, prefix=prefix, filename="_kmeans_border.png")
         # cluster-both
         pltSegPlot(grid.agents, grid.imgs.get("kmean"),
-                  isCenter=True, isRect=True,
-                  path=path, prefix=prefix, filename="_kmeans_both.png")
+                   isCenter=True, isRect=True,
+                   path=path, prefix=prefix, filename="_kmeans_both.png")
 
     # binary-none
     pltSegPlot(grid.agents, grid.imgs.get("bin"),
@@ -315,16 +307,16 @@ def savePlot(grid, path, prefix="GRID", simple=True):
     if not simple:
         # binary-center
         pltSegPlot(grid.agents, grid.imgs.get("bin"),
-                  isCenter=True,
-                  path=path, prefix=prefix, filename="_bin_centroid.png")
+                   isCenter=True,
+                   path=path, prefix=prefix, filename="_bin_centroid.png")
         # binary-frame
         pltSegPlot(grid.agents, grid.imgs.get("bin"),
-                  isRect=True,
-                  path=path, prefix=prefix, filename="_bin_border.png")
+                   isRect=True,
+                   path=path, prefix=prefix, filename="_bin_border.png")
         # binary-both
         pltSegPlot(grid.agents, grid.imgs.get("bin"),
-                  isCenter=True, isRect=True,
-                  path=path, prefix=prefix, filename="_bin_both.png")
+                   isCenter=True, isRect=True,
+                   path=path, prefix=prefix, filename="_bin_both.png")
 
     if not simple:
         # extraction-none
@@ -332,12 +324,12 @@ def savePlot(grid, path, prefix="GRID", simple=True):
                    path=path, prefix=prefix, filename="_seg.png")
         # extraction-center
         pltSegPlot(grid.agents, grid.imgs.get("visSeg"),
-                  isCenter=True,
-                  path=path, prefix=prefix, filename="_seg_centroid.png")
+                   isCenter=True,
+                   path=path, prefix=prefix, filename="_seg_centroid.png")
         # extraction-frame
         pltSegPlot(grid.agents, grid.imgs.get("visSeg"),
-                  isCenter=True, isRect=True,
-                  path=path, prefix=prefix, filename="_seg_both.png")
+                   isCenter=True, isRect=True,
+                   path=path, prefix=prefix, filename="_seg_both.png")
 
     # extraction-frame
     pltSegPlot(grid.agents, grid.imgs.get("visSeg"),
@@ -382,7 +374,8 @@ def saveH5(grid, path, prefix="GRID"):
             try:
                 with h5py.File(pathH5, "a") as f:
                     f.create_dataset(key, data=imgFin, compression="gzip")
-                    f.create_dataset(key+"_raw", data=imgAll, compression="gzip")
+                    f.create_dataset(key+"_raw", data=imgAll,
+                                     compression="gzip")
             except Exception as e:
                 print("Failed to save %s" % key)
                 print(e)
@@ -512,24 +505,24 @@ def get_valid_range(agent, img, is_border=False):
 # GEOGCS["WGS 84",DATUM["WGS_1984",
 # SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-63],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32620"]]'
 
-# PROJCS["WGS 84 / UTM zone 20N", 
-# GEOGCS["WGS 84", 
-# DATUM["WGS_1984", 
-# SPHEROID["WGS 84", 6378137, 298.257223563, 
-# AUTHORITY["EPSG", "7030"]], 
-# AUTHORITY["EPSG", "6326"]], 
+# PROJCS["WGS 84 / UTM zone 20N",
+# GEOGCS["WGS 84",
+# DATUM["WGS_1984",
+# SPHEROID["WGS 84", 6378137, 298.257223563,
+# AUTHORITY["EPSG", "7030"]],
+# AUTHORITY["EPSG", "6326"]],
 # PRIMEM["Greenwich", 0,
-#  AUTHORITY["EPSG", "8901"]], 
-# UNIT["degree", 0.0174532925199433, 
-# AUTHORITY["EPSG", "9122"]], 
+#  AUTHORITY["EPSG", "8901"]],
+# UNIT["degree", 0.0174532925199433,
+# AUTHORITY["EPSG", "9122"]],
 # AUTHORITY["EPSG", "4326"]],
-#        PROJECTION["Transverse_Mercator"], 
-#        PARAMETER["latitude_of_origin", 0], 
-#        PARAMETER["central_meridian", -63], 
-#        PARAMETER["scale_factor", 0.9996], 
-#        PARAMETER["false_easting", 500000], 
-#        PARAMETER["false_northing", 0], 
-#        UNIT["metre", 1, AUTHORITY["EPSG", "9001"]], 
+#        PROJECTION["Transverse_Mercator"],
+#        PARAMETER["latitude_of_origin", 0],
+#        PARAMETER["central_meridian", -63],
+#        PARAMETER["scale_factor", 0.9996],
+#        PARAMETER["false_easting", 500000],
+#        PARAMETER["false_northing", 0],
+#        UNIT["metre", 1, AUTHORITY["EPSG", "9001"]],
 #        AXIS["Easting", EAST], AXIS["Northing", NORTH], A
 #        UTHORITY["EPSG", "32620"]]
 

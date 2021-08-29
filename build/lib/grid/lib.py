@@ -20,17 +20,14 @@ from matplotlib import patches
 from matplotlib.lines import Line2D
 
 
-<<<<<<< HEAD
 def find_small_shape(shape_src, limits=32767, rate=0.95):
     h, w = shape_src
     while max(h, w) > limits:
         h *= rate
         w *= rate
-    return (int(h), int(w))
+    return int(h), int(w)
 
 
-=======
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
 def doKMeans(img, k=3, features=[0]):
     """
     ----------
@@ -46,7 +43,7 @@ def doKMeans(img, k=3, features=[0]):
     img = (img-img_min)/(img_max-img_min)
     ## convert to float32
     img_z = img.reshape((-1, img.shape[2])).astype(np.float32)
-    
+
     # define criteria, number of clusters(K) and apply kmeans()
     criteria = (cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
     param_k = dict(data=img_z,
@@ -54,7 +51,7 @@ def doKMeans(img, k=3, features=[0]):
                    bestLabels=None,
                    criteria=criteria,
                    attempts=10,
-                #    flags=cv2.KMEANS_RANDOM_CENTERS)
+                   #    flags=cv2.KMEANS_RANDOM_CENTERS)
                    flags=cv2.KMEANS_PP_CENTERS)
 
     # KMEANS_RANDOM_CENTERS
@@ -81,9 +78,9 @@ def smoothImg(image, n):
     """
 
     kernel = np.array((
-            [1, 4, 1],
-            [4, 9, 4],
-            [1, 4, 1]), dtype='int') / 29
+        [1, 4, 1],
+        [4, 9, 4],
+        [1, 4, 1]), dtype='int') / 29
 
     for _ in range(n):
         image = convolve2d(image, kernel, mode='same')
@@ -155,16 +152,7 @@ def cropImg(img, pts, resize=2048):
     img_H = (euclidean(pt_SE, pt_NE) + euclidean(pt_SW, pt_NW))/2
 
     # resize output dimension
-<<<<<<< HEAD
     shape = find_small_shape((img_W, img_H), limits=resize)
-=======
-    rate = .95
-    while (max(img_W, img_H) > resize):
-        img_W *= rate
-        img_H *= rate
-
-    shape = (int(img_W), int(img_H))
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
 
     # generate target point
     pts2 = np.float32(
@@ -447,13 +435,13 @@ def findPeaks(img, nPeaks=0, axis=1, nSmooth=100):
     """
 
     # compute 1-D signal
-    signal = img.mean(axis=(not axis)*1) # 0:nrow
+    signal = img.mean(axis=(not axis)*1)  # 0:nrow
 
     # ignore signals from iamge frame
     signal[:2] = [0, 0]
     signal[-2:] = [0, 0]
 
-    # gaussian smooth 
+    # gaussian smooth
     for _ in range(int(len(signal)/30)):
         signal = np.convolve(
             np.array([1, 2, 4, 2, 1])/10, signal, mode='same')
@@ -467,7 +455,7 @@ def findPeaks(img, nPeaks=0, axis=1, nSmooth=100):
     stdDiff = np.array(lsDiff).std()
 
     # get finalized peaks with distance constrain
-    coef = 0.18/(stdDiff/medDiff) # empirical 
+    coef = 0.18/(stdDiff/medDiff)  # empirical
     peaks, _ = find_peaks(signal, distance=medDiff-stdDiff*coef)
     # , prominence=(0.01, None))
     if nPeaks != 0:
@@ -505,7 +493,7 @@ def pltCross(x, y, size=3, width=1, color="red"):
     line1 = Line2D(pt1X, pt1Y, linewidth=width, color=color)
     pt2X = [x-size, x+size]
     pt2Y = [y+size, y-size]
-    line2 = Line2D(pt2X, pt2Y, linewidth=width, color=color)    
+    line2 = Line2D(pt2X, pt2Y, linewidth=width, color=color)
     return line1, line2
 
 
@@ -646,11 +634,12 @@ def getRGBQImg(img):
 
 
 def getBinQImg(img):
-     h, w = img.shape[0], img.shape[1]
-     qImg = QImage(img.astype(np.uint8).copy(), w, h, w*1, QImage.Format_Indexed8)
-     qImg.setColor(0, qRgb(0, 0, 0))
-     qImg.setColor(1, qRgb(241, 225, 29))
-     return QPixmap(qImg)
+    h, w = img.shape[0], img.shape[1]
+    qImg = QImage(img.astype(np.uint8).copy(), w,
+                  h, w*1, QImage.Format_Indexed8)
+    qImg.setColor(0, qRgb(0, 0, 0))
+    qImg.setColor(1, qRgb(241, 225, 29))
+    return QPixmap(qImg)
 
 
 def getIdx8QImg(img, k):
@@ -664,7 +653,8 @@ def getIdx8QImg(img, k):
                 qRgb(247, 129, 191),
                 qRgb(153, 153, 153)]
     h, w = img.shape[0], img.shape[1]
-    qImg = QImage(img.astype(np.uint8).copy(), w, h, w*1, QImage.Format_Indexed8)
+    qImg = QImage(img.astype(np.uint8).copy(), w,
+                  h, w*1, QImage.Format_Indexed8)
     for i in range(k):
         qImg.setColor(i, colormap[i])
     return QPixmap(qImg)
@@ -672,7 +662,8 @@ def getIdx8QImg(img, k):
 
 def getGrayQImg(img):
     h, w = img.shape[0], img.shape[1]
-    qImg = QImage(img.astype(np.uint8).copy(), w, h, w*1, QImage.Format_Grayscale8)
+    qImg = QImage(img.astype(np.uint8).copy(), w,
+                  h, w*1, QImage.Format_Grayscale8)
     return QPixmap(qImg)
 
 

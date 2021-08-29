@@ -1,10 +1,6 @@
 Metadata-Version: 1.2
 Name: photo-grid
-<<<<<<< HEAD
-Version: 1.2.15
-=======
-Version: 1.2.14
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
+Version: 1.2.16
 Summary: A GUI for field segmentation
 Home-page: https://github.com/Poissonfish/GRID
 Author: James Chen

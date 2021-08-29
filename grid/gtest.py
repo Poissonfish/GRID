@@ -1,27 +1,26 @@
 
 # === === === === === run main === === === === ===
-# # basic imports
-# import sys
-# import os
+# basic imports
+import sys
+import os
+os.chdir("photo_grid")
 
-# # 3rd party imports
-# from PyQt5.QtWidgets import QApplication
-# from PyQt5.QtCore import QTimer
-# import qdarkstyle
+# 3rd party imports
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import QTimer
+import qdarkstyle
 
-# # self imports
-# from .gridGUI import *
-# app = QApplication(sys.argv)
-# if '--light' not in sys.argv:
-#     app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+# self imports
+from grid.gridGUI import *
 
-# grid = GRID_GUI()
+app = QApplication(sys.argv)
+if '--light' not in sys.argv:
+    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
 
-# timer = QTimer()
-# timer.timeout.connect(lambda: None)
-# timer.start(100)
+grid = GRID_GUI()
 
-# app.exec_()
+
+app.exec_()
 
 # === === === === === command-line test === === === === ===
 

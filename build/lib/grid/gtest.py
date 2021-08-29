@@ -41,7 +41,6 @@
 #     preset="tttttt.grid")
 
 # ======== 20200827 segmentation ========
-<<<<<<< HEAD
 # import os
 # import sys
 # from PyQt5.QtWidgets import QApplication
@@ -74,36 +73,26 @@
 
 import os, sys
 sys.path
-sys.path.remove("/Users/jchen/Dropbox/projects/photo_grid/build/lib/grid")
-# sys.path.remove("/Users/jchen/Dropbox/projects/photo_grid/grid")
-=======
-import os
-import sys
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
+sys.path.remove("/Users/jchen/Dropbox/projects/photo_grid/grid")
 from PyQt5.QtWidgets import QApplication
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-<<<<<<< HEAD
 os.chdir("/Users/jchen/Dropbox/projects/photo_grid/")
 import grid as gd
 
-=======
-import grid as gd
-from .gridGUI import *
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
 import shapefile
 import numpy as np
 import pandas as pd
 import rasterio
-<<<<<<< HEAD
+
 
 grid = gd.GRID()
 grid.loadData()
 pts = [[250, 500],
-        [250, 1500],
-        [750, 1500],
-        [750, 500]]
+       [250, 1500],
+       [750, 1500],
+       [750, 500]]
 grid.cropImg(pts)
 grid.imgs["w"]
 
@@ -142,8 +131,8 @@ plt.imshow(img)
 test = cv2.resize(img, (500, 100))
 test.shape
 plt.imshow(test)
-src	[required] source/input image
-dsize	[required] desired size for the output image
+src[required] source/input image
+dsize[required] desired size for the output image
 
 
 plt.imshow(dst)
@@ -151,49 +140,8 @@ plt.imshow(dst)
 rasterio.warp.aligned_target(H, shape[1], shape[0], )
 
 
-
 plt.imshow(grid.imgs.imgs["raw"])
 plt.imshow(grid.imgs.imgs["crop"])
-=======
-import rasterio.mask
-
-os.getcwd()
-
-app = QApplication(sys.argv)
-grid = gd.GRID()
-
-grid.loadData(
-    pathImg="/Users/jameschen/Dropbox/photo_grid/test/map_match/demo.jpg",
-    pathMap="/Users/jameschen/Dropbox/photo_grid/test/map_match/demo.csv")
-grid.binarizeImg(k=3, lsSelect=[0, 1], valShad=0, valSmth=0)
-grid.findPlots(nRow=4, nCol=3)
-
-g = GRID_GUI(grid, 4)  # 0:input, 1:crop, 2:kmean, 3:anchor, 4:output
-app.exec_()
-
-
-# ========= 20200801 multi seasons =========
-
-# import os, sys
-# sys.path
-# sys.path.remove("/Users/jameschen/Dropbox/photo_grid/grid")
-# from PyQt5.QtWidgets import QApplication
-# import numpy as np
-# import cv2
-# import matplotlib.pyplot as plt
-# os.chdir("/Users/jameschen/Dropbox/photo_grid/")
-# import grid as gd
-# import shapefile
-# import numpy as np
-# import pandas as pd
-# import rasterio
-
-# grid = gd.GRID()
-# os.chdir("/Users/jameschen/Dropbox/photo_grid/test/zhou")
-# grid.loadData(
-#     pathImg="/Users/jameschen/Dropbox/photo_grid/test/seasons/s2.tif",
-#     pathShp="/Users/jameschen/Dropbox/photo_grid/test/seasons/s1/s1.shp")
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
 
 # grid.cropImg(pts=[[718.3549060542798, 3950.951983298539],
 #                   [5798.1503131524005, 2488.5866388308978],
@@ -317,7 +265,6 @@ app.exec_()
 # # try remapping to Tiff coordinate
 # pts_rec = [list(tiff_transform * pts_rec[i])
 #            for i in range(4)]
-
 
 
 # grid.cpuSeg(outplot=True)
@@ -1031,5 +978,5 @@ app.exec_()
 # app.exec_()
 
 #
-# 
-# 
+#
+#

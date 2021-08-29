@@ -250,33 +250,21 @@ class PnOutputer(QWidget):
         '''
         '''
         value = self.sl_grid.value()
-<<<<<<< HEAD
         self.gr_grid.setTitle("Grid Coef. = %.2f" % (value/10))
-=======
-        self.gr_grid.setTitle("Grid Coef. = %.2f" %(value/10))
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
         self.auto_seg()
 
     def change_width(self):
         '''
         '''
         value = self.sl_width.value()
-<<<<<<< HEAD
         self.gr_width.setTitle("Width = %d units" % (value))
-=======
-        self.gr_width.setTitle("Width = %d units" %(value))
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
         self.fix_seg()
 
     def change_length(self):
         '''
         '''
         value = self.sl_length.value()
-<<<<<<< HEAD
         self.gr_length.setTitle("Length = %d units" % (value))
-=======
-        self.gr_length.setTitle("Length = %d units" %(value))
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
         self.fix_seg()
 
     def alignX(self):
@@ -435,14 +423,9 @@ class Widget_Seg(Widget_Img):
             self.setCursor(QCursor(Qt.SizeVerCursor))
         elif self.task == 3:
             self.setCursor(QCursor(Qt.SizeHorCursor))
-<<<<<<< HEAD
 
         # pan
         if (event.buttons() == Qt.LeftButton) & (self.agent_click != False):
-=======
-        # pan
-        if (event.button() == Qt.LeftButton) & (self.agent_click != False):
->>>>>>> a3dc4d71402bde51affcb18915bf58c5ef0826f1
             # convert GUI to image coordinate
             x_move, y_move = self.convertGUI2XY(self.pos_move)
             x_move_prev, y_move_prev = self.convertGUI2XY(self.pos_move_prev)

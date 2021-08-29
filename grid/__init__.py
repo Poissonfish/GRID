@@ -1,6 +1,6 @@
 __author__ = "Chunpeng James Chen"
-__version__ = "1.2.16"
-__update__ = "Aug 25, 2021"
+__version__ = "1.2.17"
+__update__ = "Aug 28, 2021"
 
 # imports
 import subprocess
@@ -25,7 +25,7 @@ if "__main__" not in sys.argv[0]:
         print("         as command-line version is not ready yet.")
     print("~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~")
     print("Recent update ")
-    print("    - Support images with huge dimensions (>32767)")
+    print("    - Support images with huge dimensions (> 32767)")
     print("    - Add CRS to shapefiles (.prj) ")
     print("    - Support ESRI shapefile compatible in QGIS    ")
     print("~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~")

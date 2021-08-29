@@ -20,18 +20,18 @@ class GImage():
 
         # images
         self.imgs = {
-            'raw'    : None,
-            'rawRs'  : None,
-            'crop'   : None,
-            'mean'   : None,
-            'kmean'  : None,
-            'binOrg' : None,
+            'raw': None,
+            'rawRs': None,
+            'crop': None,
+            'mean': None,
+            'kmean': None,
+            'binOrg': None,
             'binTemp': None,
-            'binSd'  : None,
-            'binSm'  : None,
-            'bin'    : None,
-            'binSeg' : None,
-            'visSeg' : None
+            'binSd': None,
+            'binSm': None,
+            'bin': None,
+            'binSeg': None,
+            'visSeg': None
         }
 
         # dimension
@@ -51,14 +51,14 @@ class GImage():
 
         # kmean param.
         self.paramKMs = {
-            'k' : -1,
+            'k': -1,
             'center': None,
-            'rank' : None,
+            'rank': None,
             'features': [],
-            'lsSelect' : [],
-            'lsKTobin' : [],
-            'valShad' : -1,
-            'valSmth' : -1
+            'lsSelect': [],
+            'lsKTobin': [],
+            'valShad': -1,
+            'valSmth': -1
         }
 
     def get(self, key):
@@ -87,7 +87,8 @@ class GImage():
         """
         if isinstance(pathImg, str):
             # a path to a file
-            isLocalImg = pathImg.find("http://") + pathImg.find("https://") == -2
+            isLocalImg = pathImg.find("http://") + \
+                pathImg.find("https://") == -2
 
             # image
             if isLocalImg:
@@ -190,7 +191,7 @@ class GImage():
             self.paramKMs['rank'] = self.rankCenters(
                 k=k, center=center, colorOnly=colorOnly)
             # can't update yet as binarize needs it
-            # self.paramKMs['k'] = k 
+            # self.paramKMs['k'] = k
             # self.paramKMs['features'] = features
         else:
             # skip
@@ -242,9 +243,11 @@ class GImage():
                 valSmthReal = valSmthDiff
             else:
                 valSmthReal = value
-                self.set(key='binTemp', value=self.get(key='binOrg').copy())      
-            self.set(key='binTemp', value=smoothImg(image=self.get(key='binTemp'), n=valSmthReal))
-            self.set(key='binSm',   value=binarizeSmImg(self.get(key='binTemp')))
+                self.set(key='binTemp', value=self.get(key='binOrg').copy())
+            self.set(key='binTemp', value=smoothImg(
+                image=self.get(key='binTemp'), n=valSmthReal))
+            self.set(key='binSm',   value=binarizeSmImg(
+                self.get(key='binTemp')))
             # update parameters
             self.paramKMs['valSmth'] = value
         else:
@@ -259,7 +262,7 @@ class GImage():
         """
 
         if value != self.paramKMs['valShad']:
-            self.set(key='binSd', value=(self.get(key='mean')>=value)*1)
+            self.set(key='binSd', value=(self.get(key='mean') >= value)*1)
             # update parameter
             self.paramKMs['valShad'] = value
         else:
@@ -296,7 +299,7 @@ class GImage():
 
         if colorOnly:
             ratioK = [(center[i, 0]-center[i, 1])/center[i, :].sum()
-                    for i in range(center.shape[0])]
+                      for i in range(center.shape[0])]
             rank = np.flip(np.argsort(ratioK), axis=0)
         else:
             for i in range(k):

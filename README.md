@@ -23,6 +23,9 @@
 
 ## Update Log
 
+### Aug 25, 2021 (1.2.16)
+    * Handle large images (pixel dimension > 32767)
+
 ### Sep 28, 2020 (1.2.13)
     * Impore handling of floating-encoded images
 

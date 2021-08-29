@@ -1,15 +1,15 @@
 # basic imports
+from .lib import *
+from .gagent import *
+from .gmap import *
+from .gimage import *
+from .guser import *
 import os
 import sys
 import warnings
 warnings.filterwarnings("ignore")
 
 # self imports
-from .guser import *
-from .gimage import *
-from .gmap import *
-from .gagent import *
-from .lib import *
 
 
 class GRID():
@@ -66,7 +66,7 @@ class GRID():
             self.cropImg(pts=pts, outplot=outplot)
             prog = updateProgress(prog, 1, "binarizing")
             self.binarizeImg(k=k, features=features,
-                             lsSelect=lsSelect, 
+                             lsSelect=lsSelect,
                              valShad=valShad, valSmth=valSmth, outplot=outplot)
             prog = updateProgress(prog, 1, "locating plots")
             self.findPlots(nRow=nRow, nCol=nCol,
@@ -196,7 +196,8 @@ class GRID():
         if self.subflag and "__main__.py" in sys.argv[0]:
             self.subflag = False
             QTimer.singleShot(self.window, lambda: setattr(self, "flag", True))
-            QTimer.singleShot(self.window, lambda: setattr(self, "subflag", True))
+            QTimer.singleShot(
+                self.window, lambda: setattr(self, "subflag", True))
 
         # Plot
         if outplot:
