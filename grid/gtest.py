@@ -3,6 +3,20 @@
 # basic imports
 import sys
 import os
+import cv2 as cv
+
+
+
+ver = cv.__version__
+ver = "4.5.2234"
+ver_num = int(ver.replace(".", "")[:3])
+is_old_cv = ver_num < 452
+
+
+
+
+
+
 os.chdir("photo_grid")
 
 # 3rd party imports

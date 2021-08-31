@@ -1,6 +1,6 @@
 import setuptools
 setuptools.setup(name='photo_grid',
-                 version='1.2.16',
+                 version='1.2.18',
                  description='A GUI for field segmentation',
                  url='https://github.com/Poissonfish/GRID',
                  python_requires='>=3.6',

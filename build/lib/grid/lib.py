@@ -266,7 +266,8 @@ def rotateNdArray(img, angle):
         imgP = np.pad(imgTemp, [sizePad, sizePad], 'constant')
 
         # rotate
-        pivot = tuple((np.array(imgP.shape[:2])/2).astype(np.int))
+        pivot = (np.array(imgP.shape[:2])/2).astype(np.int).tolist()
+        print("testse")
         matRot = cv2.getRotationMatrix2D(pivot, -angle, 1.0)
         imgR = cv2.warpAffine(
             imgP.astype(np.float32), matRot, imgP.shape, flags=cv2.INTER_LINEAR).astype(np.uint8)
@@ -298,7 +299,9 @@ def rotateBinNdArray(img, angle):
     imgP = np.pad(img, [sizePad, sizePad], 'constant')
 
     # rotate
-    pivot = tuple((np.array(imgP.shape[:2])/2).astype(np.int))
+    # this line not working after opencv 4.5.3
+    # pivot = tuple((np.array(imgP.shape[:2])/2).astype(np.int))
+    pivot = (np.array(imgP.shape[:2])/2).astype(np.int).tolist()
     matRot = cv2.getRotationMatrix2D(pivot, -angle, 1.0)
     imgR = cv2.warpAffine(
         imgP.astype(np.float32), matRot, imgP.shape, flags=cv2.INTER_LINEAR).astype(np.uint8)

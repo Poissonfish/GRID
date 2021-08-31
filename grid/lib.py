@@ -296,15 +296,21 @@ def rotateBinNdArray(img, angle):
 
     # padding
     sizePad = max(img.shape)
-    imgP = np.pad(img, [sizePad, sizePad], 'constant')
+    imgP = np.pad(img, [sizePad, sizePad], 'constant').astype(np.float32)
 
     # rotate
-    # this line not working after opencv 4.5.3
-    # pivot = tuple((np.array(imgP.shape[:2])/2).astype(np.int))
-    pivot = (np.array(imgP.shape[:2])/2).astype(np.int).tolist()
+    # check OpenCV version (4.5.2+ handle input format differently)
+    ver_cv = cv2.__version__
+    ver_cv_num = int(ver_cv.replace(".", "")[:3])
+    is_old_cv = ver_cv_num < 452
+    if is_old_cv:
+        pivot = tuple((np.array(imgP.shape[:2])/2).astype(np.int))
+    else:
+        pivot = (np.array(imgP.shape[:2])/2).astype(np.int).tolist()
+    # rotate images
     matRot = cv2.getRotationMatrix2D(pivot, -angle, 1.0)
-    imgR = cv2.warpAffine(
-        imgP.astype(np.float32), matRot, imgP.shape, flags=cv2.INTER_LINEAR).astype(np.uint8)
+    imgR = cv2.warpAffine(imgP, matRot, imgP.shape,
+                          flags=cv2.INTER_LINEAR).astype(np.uint8)
 
     # crop
     sigX = np.where(imgR.sum(axis=0) != 0)[0]

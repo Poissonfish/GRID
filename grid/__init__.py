@@ -1,6 +1,6 @@
 __author__ = "Chunpeng James Chen"
-__version__ = "1.2.17"
-__update__ = "Aug 28, 2021"
+__version__ = "1.2.18"
+__update__ = "Aug 31, 2021"
 
 # imports
 import subprocess
@@ -73,7 +73,6 @@ from .grid import *
 
 """
 Update Log
-
 - Aug 25, 2021 (1.2.16)
     * Handle large images (pixel dimension > 32767)
 
