@@ -700,8 +700,8 @@ class GProg(QWidget):
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.bar)
         self.setLayout(self.layout)
-        self.move(self._pos.x()+(wgW-self._width)/2,
-                  self._pos.y()+(wgH-self._height)/2)
+        self.move(int(self._pos.x()+(wgW-self._width)/2),
+                  int(self._pos.y()+(wgH-self._height)/2))
         self.resize(self._width, self._height)
         self.show()
         self.repaint()

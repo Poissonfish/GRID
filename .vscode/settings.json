@@ -3,7 +3,7 @@
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
-    "workbench.colorTheme": "Code Blue",
+    "workbench.colorTheme": "Julia (Monokai Vibrant)",
     "jupyter.jupyterServerType": "local",
     "jupyter.jupyterCommandLineArguments": []
 }

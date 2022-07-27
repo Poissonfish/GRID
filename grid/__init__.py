@@ -1,6 +1,6 @@
-__author__ = "Chunpeng James Chen"
-__version__ = "1.2.18"
-__update__ = "Aug 31, 2021"
+__author__ = "Chun-Peng James Chen"
+__version__ = "1.2.19"
+__update__ = "July 27, 2022"
 
 # imports
 import subprocess
