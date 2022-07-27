@@ -1,79 +1,37 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Installation &mdash; GRID 1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Installation &mdash; GRID 1.2.19 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/google_analytics.js"></script>
-        <script src="https://www.googletagmanager.com/gtag/js?id=UA-151005724-3"></script>
-        <script src="https://buttons.github.io/buttons.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="First-Time Users" href="firsttime.html" />
     <link rel="prev" title="GRID: Deal with Field Segmentations Elegantly" href="../index.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html">
-          
-
-          
-            
             <img src="../_static/GRID_banner.png" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -81,29 +39,19 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">GATTING STARTED</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">GATTING STARTED</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#step-1-python">Step 1: Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-2-rasterio">Step 2: Rasterio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-rasterio-windows-users">Step 2: Rasterio (Windows Users)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-rasterio-other-users">Step 2: Rasterio (Other Users)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#step-3-install-grid-via-pypi">Step 3: Install GRID via PyPI</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="firsttime.html">First-Time Users</a></li>
 </ul>
-<p class="caption"><span class="caption-text">INTERFACE</span></p>
+<p class="caption" role="heading"><span class="caption-text">INTERFACE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../ch2_interface/load.html">Load Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ch2_interface/aoi.html">Define AOI</a></li>
@@ -111,12 +59,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../ch2_interface/centroids.html">Detect Centroids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ch2_interface/segmentation.html">Segmentation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">INPUTS/OUTPUTS</span></p>
+<p class="caption" role="heading"><span class="caption-text">INPUTS/OUTPUTS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../ch3_io/inputs.html">Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ch3_io/outputs.html">Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ADVANCED USAGE</span></p>
+<p class="caption" role="heading"><span class="caption-text">ADVANCED USAGE</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../ch4_adv/custom_index.html">Customize Vegetation Indices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ch4_adv/seasons.html">Multi-Season Images</a></li>
@@ -125,71 +73,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../ch4_adv/dl.html">Generate Datasets for Deep Learning</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">GRID</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Installation</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/ch1_started/installation.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -214,16 +121,32 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="step-1-python">
-<h2>Step 1: Python<a class="headerlink" href="#step-1-python" title="Permalink to this headline">¶</a></h2>
+<section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
+<section id="step-1-python">
+<h2>Step 1: Python<a class="headerlink" href="#step-1-python" title="Permalink to this heading"></a></h2>
 <p>GRID is developed in <strong>Python 3</strong>.
 Follow the <a class="reference external" href="https://www.python.org/downloads/">official instruction</a>
 to set up Python.</p>
-</div>
-<div class="section" id="step-2-rasterio">
-<h2>Step 2: Rasterio<a class="headerlink" href="#step-2-rasterio" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-2-rasterio-windows-users">
+<h2>Step 2: Rasterio (Windows Users)<a class="headerlink" href="#step-2-rasterio-windows-users" title="Permalink to this heading"></a></h2>
+<p>The easiest way to install Rasterio in Windows is to build it from binaries
+<a class="reference external" href="https://rasterio.readthedocs.io/en/latest/installation.html">(Official instruction)</a>.
+Please download correct versions of <code class="docutils literal notranslate"><span class="pre">.whl</span></code> from
+<a class="reference external" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#rasterio">Rasterio</a> and
+<a class="reference external" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal">GDAL</a>, and use <code class="docutils literal notranslate"><span class="pre">pip`</span></code> to install them.</p>
+<p>For example, if you want to run GRID in <strong>64-bit</strong> Windows 10 using Python <strong>3.9</strong>,
+the <code class="docutils literal notranslate"><span class="pre">.whl</span></code> names and the commands should be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><style type="text/css">
+span.prompt1:before {
+  content: "$ ";
+}
+</style><span class="prompt1">python -m pip install GDAL-3.4.3-cp39-cp39-win_amd64.whl</span>
+<span class="prompt1">python -m pip install rasterio-1.2.10-cp39-cp39-win_amd64.whl</span>
+</pre></div></div></section>
+<section id="step-2-rasterio-other-users">
+<h2>Step 2: Rasterio (Other Users)<a class="headerlink" href="#step-2-rasterio-other-users" title="Permalink to this heading"></a></h2>
 <p><a class="reference external" href="https://rasterio.readthedocs.io/en/latest/index.html">Rasterio</a>
 is the only GRID dependency that can’t be installed via
 <a class="reference external" href="https://pip.pypa.io/en/stable/">PyPI</a>.
@@ -232,11 +155,7 @@ Below are the alternatives:</p>
 <li><dl>
 <dt><strong>Anaconda (Recommended)</strong></dt><dd><p>Install Anaconda <a class="reference external" href="https://www.anaconda.com/products/individual">here</a>,
 and run the following commands in <strong>Anaconda Prompt</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><style type="text/css">
-span.prompt1:before {
-  content: "$ ";
-}
-</style><span class="prompt1">conda config --add channels conda-forge</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">conda config --add channels conda-forge</span>
 <span class="prompt1">conda install rasterio</span>
 </pre></div></div></dd>
 </dl>
@@ -244,12 +163,12 @@ span.prompt1:before {
 <li><p><a class="reference external" href="https://rasterio.readthedocs.io/en/latest/installation.html#installing-from-binaries">Install from binaries</a></p></li>
 <li><p><a class="reference external" href="https://rasterio.readthedocs.io/en/latest/installation.html#installing-from-the-source-distribution">Install from the source distribution</a></p></li>
 </ul>
-</div>
-<div class="section" id="step-3-install-grid-via-pypi">
-<h2>Step 3: Install GRID via PyPI<a class="headerlink" href="#step-3-install-grid-via-pypi" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-3-install-grid-via-pypi">
+<h2>Step 3: Install GRID via PyPI<a class="headerlink" href="#step-3-install-grid-via-pypi" title="Permalink to this heading"></a></h2>
 <p>Finally, to install GRID, in the prompt
 (or Anaconda Prompts if you installed Rasterio via Anaconda):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">python3 -m pip install photo_grid</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">python -m pip install photo_grid</span>
 </pre></div></div><p>After finishing this step, you should be good to go.
 Otherwise, check what dependencies you miss or report any issue to
 the <a class="reference external" href="https://github.com/Poissonfish/GRID/issues">GitHub repository</a> .</p>
@@ -259,55 +178,38 @@ the <a class="reference external" href="https://github.com/Poissonfish/GRID/issu
 follow the <a class="reference external" href="https://pip.pypa.io/en/stable/installing/">link</a>
 to install it.</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="firsttime.html" class="btn btn-neutral float-right" title="First-Time Users" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../index.html" class="btn btn-neutral float-left" title="GRID: Deal with Field Segmentations Elegantly" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="firsttime.html" class="btn btn-neutral float-right" title="First-Time Users" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, Chunpeng James Chen.
-
-    </p>
+    <p>&#169; Copyright 2022, Chun-Peng James Chen.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

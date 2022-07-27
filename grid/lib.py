@@ -702,7 +702,7 @@ class GProg(QWidget):
         self.setLayout(self.layout)
         self.move(int(self._pos.x()+(wgW-self._width)/2),
                   int(self._pos.y()+(wgH-self._height)/2))
-        self.resize(self._width, self._height)
+        self.resize(int(self._width), int(self._height))
         self.show()
         self.repaint()
         QApplication.processEvents()

@@ -1,5 +1,5 @@
 __author__ = "Chun-Peng James Chen"
-__version__ = "1.2.19"
+__version__ = "1.2.21"
 __update__ = "July 27, 2022"
 
 # imports
@@ -15,7 +15,7 @@ if "__main__" not in sys.argv[0]:
     print("~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~")
     print("                 Welcome to GRID Ver.%s    " % __version__)
     print("~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~")
-    print("Author      : James Chen <chun-peng.chen@wsu.edu>    ")
+    print("Author      : James Chen <niche@vt.edu>    ")
     print("Last update : %s              " % __update__)
     print("User manual : https://poissonfish.github.io/GRID/")
 

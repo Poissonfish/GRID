@@ -19,7 +19,6 @@ grid/guser.py
 grid/io.py
 grid/lib.py
 grid/demo/seg_img.jpg
-grid/demo/seg_map.csv
 grid/gui/__init__.py
 grid/gui/anchor.py
 grid/gui/cropper.py

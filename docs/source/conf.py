@@ -19,11 +19,11 @@
 import sphinx_rtd_theme
 
 project = 'GRID'
-copyright = '2020, Chunpeng James Chen'
-author = 'Chunpeng James Chen'
+copyright = '2022, Chun-Peng James Chen'
+author = 'Chun-Peng James Chen'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+release = '1.2.19'
 
 
 # -- General configuration ---------------------------------------------------
@@ -67,9 +67,9 @@ html_logo = 'res/GRID_banner.png'
 
 
 def setup(app):
-    app.add_javascript("google_analytics.js")
-    app.add_javascript(
-        "https://www.googletagmanager.com/gtag/js?id=UA-151005724-3")
-    app.add_javascript(
-        "https://buttons.github.io/buttons.js")
-
+    pass
+    # app.add_javascript("google_analytics.js")
+    # app.add_javascript(
+    #     "https://www.googletagmanager.com/gtag/js?id=UA-151005724-3")
+    # app.add_javascript(
+    #     "https://buttons.github.io/buttons.js")

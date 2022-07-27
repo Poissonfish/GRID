@@ -23,6 +23,7 @@
 *.spec
 *.dat
 **/data/*
+docs/source/*
 env/*
 *.npy
 test/*

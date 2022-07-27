@@ -28,7 +28,7 @@ Getting started
 
 * **Installation**:
   :ref:`Python 3 <Step 1\: Python>` |
-  :ref:`Rasterio <Step 2\: Rasterio>` |
+  :ref:`Rasterio <Step 2\: Rasterio \(Windows Users\)>` |
   :ref:`PyPI <Step 3\: Install GRID via PyPI>` |
   
 * **First-time users**:
