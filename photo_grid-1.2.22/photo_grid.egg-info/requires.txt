@@ -1,0 +1,13 @@
+numpy
+pandas>=0.19.2
+h5py
+pyshp
+sklearn
+scipy
+matplotlib
+image
+opencv-python
+rasterio
+PyQt6
+qdarkstyle
+tqdm

@@ -8,6 +8,6 @@ matplotlib
 image
 opencv-python
 rasterio
-PyQt5
+PyQt6
 qdarkstyle
 tqdm
