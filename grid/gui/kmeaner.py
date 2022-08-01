@@ -2,9 +2,9 @@
 import numpy as np
 
 # 3rd party imports
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
 
 # self imports
 from ..grid import *
@@ -122,7 +122,7 @@ class PnKmeaner(QWidget):
         self.sl_k.setMaximum(self.kMax)
         self.sl_k.setValue(3)
         self.sl_k.setTickInterval(1)
-        self.sl_k.setTickPosition(QSlider.TicksBelow)
+        self.sl_k.setTickPosition(QSlider.TickPosition.TicksBelow)
         self.sl_k.valueChanged.connect(self.change_k)
 
         # layout
@@ -142,7 +142,7 @@ class PnKmeaner(QWidget):
         self.sl_cut.setMaximum(3)
         self.sl_cut.setValue(1)
         self.sl_cut.setTickInterval(1)
-        self.sl_cut.setTickPosition(QSlider.TicksBelow)
+        self.sl_cut.setTickPosition(QSlider.TickPosition.TicksBelow)
         self.sl_cut.valueChanged.connect(self.auto_cut)
         self.gr_cusb.setCheckable(True)
         self.gr_cusb.setChecked(False)
@@ -163,13 +163,13 @@ class PnKmeaner(QWidget):
         self.sl_shad.setMaximum(255)
         self.sl_shad.setValue(0)
         self.sl_shad.setTickInterval(20)
-        self.sl_shad.setTickPosition(QSlider.TicksBelow)
+        self.sl_shad.setTickPosition(QSlider.TickPosition.TicksBelow)
         self.sl_shad.valueChanged.connect(self.change_shad)
         self.sl_gb.setMinimum(0)
         self.sl_gb.setMaximum(50)
         self.sl_gb.setValue(0)
         self.sl_gb.setTickInterval(5)
-        self.sl_gb.setTickPosition(QSlider.TicksBelow)
+        self.sl_gb.setTickPosition(QSlider.TickPosition.TicksBelow)
         self.sl_gb.valueChanged.connect(self.change_gb)
         # layout
         self.lo_shad.addWidget(self.sl_shad)
@@ -211,12 +211,12 @@ class PnKmeaner(QWidget):
         self.sc_right.setWidget(self.pn_right)
 
         '''assemble'''
-        policy_right = QSizePolicy(QSizePolicy.Preferred,
-                                   QSizePolicy.Preferred)
+        policy_right = QSizePolicy(QSizePolicy.Policy.Preferred,
+                                   QSizePolicy.Policy.Preferred)
         policy_right.setHorizontalStretch(2)
         self.sc_right.setSizePolicy(policy_right)
-        policy_left = QSizePolicy(QSizePolicy.Preferred,
-                                  QSizePolicy.Preferred)
+        policy_left = QSizePolicy(QSizePolicy.Policy.Preferred,
+                                  QSizePolicy.Policy.Preferred)
         policy_left.setHorizontalStretch(3)
         self.gr_left.setSizePolicy(policy_left)
         self.layout.addWidget(self.gr_left)

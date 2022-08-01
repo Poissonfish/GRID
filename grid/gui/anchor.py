@@ -2,13 +2,12 @@
 import numpy as np
 
 # 3rd party imports
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
 
 # self imports
 from .customQt import *
-
 
 class PnAnchor(QWidget):
     """
@@ -45,6 +44,8 @@ class PnAnchor(QWidget):
         self.dlMinAg = QDial()
         self.lbTk = [QLabel("# of ticks"), QLabel("# of ticks")]
         self.spbTk = [QSpinBox(), QSpinBox()]
+        for spb in self.spbTk:
+            spb.setMaximum(1000)
 
         self.mtp = 1  # for slider
 
@@ -153,13 +154,13 @@ class PnAnchor(QWidget):
         # self.wgImg.setMouseTracking(True)
 
         # Main
-        policyRight = QSizePolicy(QSizePolicy.Preferred,
-                                  QSizePolicy.Preferred)
+        policyRight = QSizePolicy(QSizePolicy.Policy.Preferred,
+                                  QSizePolicy.Policy.Preferred)
         policyRight.setHorizontalStretch(2)
         self.sc_right.setSizePolicy(policyRight)
 
-        policyLeft = QSizePolicy(QSizePolicy.Preferred,
-                                 QSizePolicy.Preferred)
+        policyLeft = QSizePolicy(QSizePolicy.Policy.Preferred,
+                                 QSizePolicy.Policy.Preferred)
         policyLeft.setHorizontalStretch(3)
         self.wgImg.setSizePolicy(policyLeft)
 
@@ -527,11 +528,13 @@ class WidgetAnchor(Widget_Img):
         # major lines
         for pt in self.ptMajLine:
             if self.isMajV:
-                painter.drawLine(pt, self.rgY[0], pt, self.rgY[1])
+                painter.drawLine(int(pt), int(self.rgY[0]),
+                                 int(pt), int(self.rgY[1]))
             else:
-                painter.drawLine(self.rgX[0], pt, self.rgX[1], pt)
+                painter.drawLine(int(self.rgX[0]), int(pt),
+                                 int(self.rgX[1]), int(pt))
 
-        ## Minor axis
+        ## minor axis
         for itc in self.itcs:
             if self.grid.map.angles[1] != 0:
                 # if minor axis angle is not equal to 0
@@ -552,9 +555,9 @@ class WidgetAnchor(Widget_Img):
             else:
                 pen.setStyle(Qt.SolidLine)
             painter.setPen(pen)
-                    
+
             try:
-                painter.drawLine(x1, y1, x2, y2)
+                painter.drawLine(int(x1), int(y1), int(x2), int(y2))
                 pen.setWidth(3)
                 pen.setStyle(Qt.SolidLine)
                 painter.setPen(pen)

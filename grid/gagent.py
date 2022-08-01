@@ -724,7 +724,7 @@ class Agent():
         y = self.getBorder(Dir.NORTH)
         w = self.getBorder(Dir.EAST) - x
         h = self.getBorder(Dir.SOUTH) - y
-        return QRect(x, y, w, h)
+        return QRect(int(x), int(y), int(w), int(h))
 
     def resetCoordinate(self):
         self.x = self.x_reset

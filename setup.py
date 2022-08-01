@@ -1,6 +1,6 @@
 import setuptools
 setuptools.setup(name='photo_grid',
-                 version='1.2.21',
+                 version='1.2.22',
                  description='A GUI for field segmentation',
                  url='https://github.com/Poissonfish/GRID',
                  python_requires='>=3.6',
@@ -27,7 +27,7 @@ setuptools.setup(name='photo_grid',
                                    'image', 'opencv-python',
                                    'rasterio',
                                    # GUI
-                                   'PyQt5',
+                                   'PyQt6',
                                    'qdarkstyle',
                                    # misc
                                    'tqdm'])

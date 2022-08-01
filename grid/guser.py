@@ -34,4 +34,4 @@ user = GUser()
 
 if user.platform == "Darwin":
     print("For Mac OS users, please ignore the messages below relating to duplicated implementations. \n\
-It's due to the conflict of OpenCV and PyQt5, but it won't affect the performance and the results.\n")
+It's due to the conflict of OpenCV and PyQt, but it won't affect the performance and the results.\n")

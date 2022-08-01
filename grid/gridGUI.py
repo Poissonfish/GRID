@@ -2,9 +2,9 @@
 from enum import Enum
 
 # 3rd party imports
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
 
 # self imports
 from .grid import *
@@ -181,7 +181,7 @@ class GRID_GUI(QMainWindow):
                 # missing file handling
                 self.showInputer(isNew=False)
                 msg = QMessageBox()
-                msg.setIcon(QMessageBox.Warning)
+                msg.setIcon(QMessageBox.Icon.Warning)
                 msg.setText("Failed to load files")
                 msg.setInformativeText("No such file or directory")
                 msg.exec_()
@@ -210,23 +210,27 @@ class GRID_GUI(QMainWindow):
         """
 
         msgBox = QMessageBox()
-        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setIcon(QMessageBox.Icon.Information)
         msgBox.setText("Finished!")
         msgBox.setInformativeText("Save and start another job?")
         msgBox.setStandardButtons(
-            QMessageBox.Yes | QMessageBox.No| QMessageBox.Discard)
+            QMessageBox.StandardButton.Yes|
+            QMessageBox.StandardButton.No|
+            QMessageBox.StandardButton.Discard)
 
-        msgBox.button(QMessageBox.Yes).setText("Save and stay in current work")
-        msgBox.button(QMessageBox.No).setText("Save and start new job")
-        msgBox.button(QMessageBox.Discard).setText("Cancel")
+        msgBox.button(QMessageBox.StandardButton.Yes).setText("Save and stay in current work")
+        msgBox.button(QMessageBox.StandardButton.No).setText("Save and start new job")
+        msgBox.button(QMessageBox.StandardButton.Discard).setText("Cancel")
+        msgBox.setSizePolicy(QSizePolicy.Policy.Expanding,
+                             QSizePolicy.Policy.Expanding)
 
         returnValue = msgBox.exec()
-        path = self.pnMain.currentWidget().fd_output.text()
-        prefix = self.pnMain.currentWidget().fd_project.text()
+        path     = self.pnMain.currentWidget().fd_output.text()
+        prefix   = self.pnMain.currentWidget().fd_project.text()
         isSimple = self.pnMain.currentWidget().ck_simple.isChecked()
-        if returnValue == QMessageBox.Yes:
+        if returnValue == QMessageBox.StandardButton.Yes:
             self.grid.save(path=path, prefix=prefix, simple=isSimple)
-        elif returnValue == QMessageBox.No:
+        elif returnValue == QMessageBox.StandardButton.No:
             self.grid.save(path=path, prefix=prefix, simple=isSimple)
             self.startover()
 
@@ -236,9 +240,13 @@ class GRID_GUI(QMainWindow):
         Parameters
         ----------
         """
-
-        center = QApplication.desktop().availableGeometry().center()
+        # get the size of the first monitor
+        size_window = QApplication.instance().screens()[0].size()
+        # get the center xy coordinate
+        center = QPoint(int(size_window.width() / 2), int(size_window.height() / 2))
+        # get the app geometry (should be a rect object)
         rect = self.geometry()
+        # update the center coordinate 
         rect.moveCenter(center)
         self.setGeometry(rect)
 

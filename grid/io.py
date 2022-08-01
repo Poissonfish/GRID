@@ -7,12 +7,11 @@ from urllib.request import urlopen
 from PIL import Image
 
 # 3-rd party imports
-from PyQt5.QtCore import QFile, QIODevice
+from PyQt6.QtCore import QFile, QIODevice
 import h5py
 import rasterio
 import shapefile
 import cv2
-
 
 # self import
 from .lib import find_small_shape, initProgress, updateProgress, pltImShow, pltSegPlot, recover_scale

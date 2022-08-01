@@ -3,9 +3,9 @@ import numpy as np
 import sys
 
 # 3-rd party imports
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
 
 # self import
 from ..lib import *
@@ -165,8 +165,8 @@ def drawCross(x, y, painter, size=2):
     l1_ed_x, l1_ed_y = x+size, y+size
     l2_st_x, l2_st_y = x-size, y+size
     l2_ed_x, l2_ed_y = x+size, y-size
-    painter.drawLine(l1_st_x, l1_st_y, l1_ed_x, l1_ed_y)
-    painter.drawLine(l2_st_x, l2_st_y, l2_ed_x, l2_ed_y)
+    painter.drawLine(int(l1_st_x), int(l1_st_y), int(l1_ed_x), int(l1_ed_y))
+    painter.drawLine(int(l2_st_x), int(l2_st_y), int(l2_ed_x), int(l2_ed_y))
 
 
 def drawTriangle(x, y, dir, painter, range=7, peak=30):

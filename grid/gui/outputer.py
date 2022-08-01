@@ -4,9 +4,9 @@ import pandas as pd
 import os
 
 # 3rd party imports
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
 
 # self imports
 from ..grid import *
@@ -89,7 +89,7 @@ class PnOutputer(QWidget):
         self.sl_grid.setMaximum(10)
         self.sl_grid.setValue(0)
         self.sl_grid.setTickInterval(2)
-        self.sl_grid.setTickPosition(QSlider.TicksBelow)
+        self.sl_grid.setTickPosition(QSlider.TickPosition.TicksBelow)
         self.sl_grid.valueChanged.connect(self.change_grid)
         self.gr_auto.setCheckable(True)
         self.gr_auto.setChecked(True)
@@ -105,13 +105,13 @@ class PnOutputer(QWidget):
         self.sl_width.setMaximum(100)
         self.sl_width.setValue(50)
         self.sl_width.setTickInterval(2)
-        self.sl_width.setTickPosition(QSlider.TicksBelow)
+        self.sl_width.setTickPosition(QSlider.TickPosition.TicksBelow)
         self.sl_width.valueChanged.connect(self.change_width)
         self.sl_length.setMinimum(0)
         self.sl_length.setMaximum(100)
         self.sl_length.setValue(50)
         self.sl_length.setTickInterval(2)
-        self.sl_length.setTickPosition(QSlider.TicksBelow)
+        self.sl_length.setTickPosition(QSlider.TickPosition.TicksBelow)
         self.sl_length.valueChanged.connect(self.change_length)
         self.cb_alignX.addItem("None")
         self.cb_alignX.addItem("Left")
@@ -198,10 +198,10 @@ class PnOutputer(QWidget):
         self.pn_right.setLayout(self.lo_right)
         self.sc_right.setWidget(self.pn_right)
         # policy
-        policy_right = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        policy_right = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         policy_right.setHorizontalStretch(2)
         self.sc_right.setSizePolicy(policy_right)
-        policy_left = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        policy_left = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         policy_left.setHorizontalStretch(3)
         self.wg_img.setSizePolicy(policy_left)
         # assemble
@@ -375,10 +375,10 @@ class Widget_Seg(Widget_Img):
                 else:
                     self.ratio = self.height() / self.qimg.height()
 
-                rec_agent = QRect(rect.x() * self.ratio + self.rgX[0],
-                                  rect.y() * self.ratio + self.rgY[0],
-                                  rect.width() * self.ratio,
-                                  rect.height() * self.ratio)
+                rec_agent = QRect(int(rect.x() * self.ratio + self.rgX[0]),
+                                  int(rect.y() * self.ratio + self.rgY[0]),
+                                  int(rect.width() * self.ratio),
+                                  int(rect.height() * self.ratio))
                 # if contain cursor
                 if rec_agent.contains(event.pos()):
                     self.agent_click = agent
@@ -476,10 +476,10 @@ class Widget_Seg(Widget_Img):
                 rect = agent.getQRect()
                 pt_x, pt_y = agent.getCoordinate()
                 self.ratio = self.width()/self.qimg.width() if self.isFitWidth else self.height()/self.qimg.height()
-                rec_agent = QRect(rect.x()*self.ratio+self.rgX[0],
-                                  rect.y()*self.ratio+self.rgY[0],
-                                  rect.width()*self.ratio,
-                                  rect.height()*self.ratio)
+                rec_agent = QRect(int(rect.x()*self.ratio+self.rgX[0]),
+                                  int(rect.y()*self.ratio+self.rgY[0]),
+                                  int(rect.width()*self.ratio),
+                                  int(rect.height()*self.ratio))
                 drawCross(pt_x*self.ratio + self.rgX[0], 
                           pt_y*self.ratio + self.rgY[0], painter)
                 painter.drawRect(rec_agent)

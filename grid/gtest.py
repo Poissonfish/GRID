@@ -6,36 +6,6 @@ import os
 import cv2 as cv
 
 
-
-ver = cv.__version__
-ver = "4.5.2234"
-ver_num = int(ver.replace(".", "")[:3])
-is_old_cv = ver_num < 452
-
-
-
-
-
-
-os.chdir("photo_grid")
-
-# 3rd party imports
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import QTimer
-import qdarkstyle
-
-# self imports
-from grid.gridGUI import *
-
-app = QApplication(sys.argv)
-if '--light' not in sys.argv:
-    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-
-grid = GRID_GUI()
-
-
-app.exec_()
-
 # === === === === === command-line test === === === === ===
 
 # import os, sys
@@ -54,107 +24,107 @@ app.exec_()
 #     preset="tttttt.grid")
 
 # ======== 20200827 segmentation ========
-# import os
-# import sys
-# from PyQt5.QtWidgets import QApplication
-# import numpy as np
-# import cv2
-# import matplotlib.pyplot as plt
-# import grid as gd
-# from .gridGUI import *
-# import shapefile
-# import numpy as np
-# import pandas as pd
-# import rasterio
-# import rasterio.mask
-
-# os.getcwd()
-
-# app = QApplication(sys.argv)
-# grid = gd.GRID()
-
-# grid.loadData(
-#     pathImg="/Users/poissonfish/Dropbox/photo_grid/test/map_match/demo.jpg",
-#     pathMap="/Users/poissonfish/Dropbox/photo_grid/test/map_match/demo.csv")
-# grid.binarizeImg(k=3, lsSelect=[0, 1], valShad=0, valSmth=0)
-# grid.findPlots(nRow=4, nCol=3)
-
-# g = GRID_GUI(grid, 4)  # 0:input, 1:crop, 2:kmean, 3:anchor, 4:output
-# app.exec_()
-
-# ========= 20200801 multi seasons =========
-
-import os, sys
-sys.path
-sys.path.remove("/Users/jchen/Dropbox/projects/photo_grid/grid")
-from PyQt5.QtWidgets import QApplication
+import os
+import sys
+from PyQt6.QtWidgets import QApplication
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-os.chdir("/Users/jchen/Dropbox/projects/photo_grid/")
 import grid as gd
-
+from .gridGUI import *
 import shapefile
 import numpy as np
 import pandas as pd
 import rasterio
+import rasterio.mask
 
+os.getcwd()
 
+app = QApplication(sys.argv)
 grid = gd.GRID()
-grid.loadData()
-pts = [[250, 500],
-       [250, 1500],
-       [750, 1500],
-       [750, 500]]
-grid.cropImg(pts)
-grid.imgs["w"]
 
-pts *= 1000
+grid.loadData(
+    pathImg="/Users/poissonfish/Dropbox/photo_grid/test/map_match/demo.jpg",
+    pathMap="/Users/poissonfish/Dropbox/photo_grid/test/map_match/demo.csv")
+# grid.binarizeImg(k=3, lsSelect=[0, 1], valShad=0, valSmth=0)
+# grid.findPlots(nRow=4, nCol=3)
 
-imgCrop, M = gd.cropImg(img_raw, pts)
+g = GRID_GUI(grid, 1)  # 0:input, 1:crop, 2:kmean, 3:anchor, 4:output
+app.exec_()
 
-img = grid.imgs.imgs["raw"]
-resize = 2048
+# ========= 20200801 multi seasons =========
 
-# define input coordinates
-pts = np.float32(pts)
+# import os, sys
+# sys.path
+# sys.path.remove("/Users/jchen/Dropbox/projects/photo_grid/grid")
+# from PyQt5.QtWidgets import QApplication
+# import numpy as np
+# import cv2
+# import matplotlib.pyplot as plt
+# os.chdir("/Users/jchen/Dropbox/projects/photo_grid/")
+# import grid as gd
 
-# assign sorted pts
-pt_NW, pt_NE, pt_SE, pt_SW = gd.sortPts(pts)
-
-# estimate output dimension
-img_W = (gd.euclidean(pt_NW, pt_NE) + gd.euclidean(pt_SE, pt_SW))/2
-img_H = (gd.euclidean(pt_SE, pt_NE) + gd.euclidean(pt_SW, pt_NW))/2
-
-# resize output dimension
-shape = find_small_shape((img_W, img_H), limit=2048)
-
-# generate target point
-pts2 = np.float32(
-    # NW,    NE,            SE,                   SW
-    [[0, 0], [shape[0], 0], [shape[0], shape[1]], [0, shape[1]]])
-
-# transformation
-H = cv2.getPerspectiveTransform(pts, pts2)
-# dst = cv2.warpPerspective(img, H, shape)
-dst = cv2.warpPerspective(np.zeros((100000, 30), dtype=np.int), H, shape)
-dst = np.array(dst).astype(np.uint8)
-
-plt.imshow(img)
-test = cv2.resize(img, (500, 100))
-test.shape
-plt.imshow(test)
-src[required] source/input image
-dsize[required] desired size for the output image
+# import shapefile
+# import numpy as np
+# import pandas as pd
+# import rasterio
 
 
-plt.imshow(dst)
+# grid = gd.GRID()
+# grid.loadData()
+# pts = [[250, 500],
+#        [250, 1500],
+#        [750, 1500],
+#        [750, 500]]
+# grid.cropImg(pts)
+# grid.imgs["w"]
 
-rasterio.warp.aligned_target(H, shape[1], shape[0], )
+# pts *= 1000
+
+# imgCrop, M = gd.cropImg(img_raw, pts)
+
+# img = grid.imgs.imgs["raw"]
+# resize = 2048
+
+# # define input coordinates
+# pts = np.float32(pts)
+
+# # assign sorted pts
+# pt_NW, pt_NE, pt_SE, pt_SW = gd.sortPts(pts)
+
+# # estimate output dimension
+# img_W = (gd.euclidean(pt_NW, pt_NE) + gd.euclidean(pt_SE, pt_SW))/2
+# img_H = (gd.euclidean(pt_SE, pt_NE) + gd.euclidean(pt_SW, pt_NW))/2
+
+# # resize output dimension
+# shape = find_small_shape((img_W, img_H), limit=2048)
+
+# # generate target point
+# pts2 = np.float32(
+#     # NW,    NE,            SE,                   SW
+#     [[0, 0], [shape[0], 0], [shape[0], shape[1]], [0, shape[1]]])
+
+# # transformation
+# H = cv2.getPerspectiveTransform(pts, pts2)
+# # dst = cv2.warpPerspective(img, H, shape)
+# dst = cv2.warpPerspective(np.zeros((100000, 30), dtype=np.int), H, shape)
+# dst = np.array(dst).astype(np.uint8)
+
+# plt.imshow(img)
+# test = cv2.resize(img, (500, 100))
+# test.shape
+# plt.imshow(test)
+# src[required] source/input image
+# dsize[required] desired size for the output image
 
 
-plt.imshow(grid.imgs.imgs["raw"])
-plt.imshow(grid.imgs.imgs["crop"])
+# plt.imshow(dst)
+
+# rasterio.warp.aligned_target(H, shape[1], shape[0], )
+
+
+# plt.imshow(grid.imgs.imgs["raw"])
+# plt.imshow(grid.imgs.imgs["crop"])
 
 # grid.cropImg(pts=[[718.3549060542798, 3950.951983298539],
 #                   [5798.1503131524005, 2488.5866388308978],
