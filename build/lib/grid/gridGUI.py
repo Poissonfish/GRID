@@ -278,7 +278,7 @@ class GRID_GUI(QMainWindow):
         self.layout = QVBoxLayout()
         self.layout.setSpacing(0)
         self.layout.addWidget(self.prog)
-        self.layout.addWidget(self.pnMain, Qt.AlignCenter)
+        self.layout.addWidget(self.pnMain, Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.pnNavi)
         self.pnContent = QWidget()
         self.pnContent.setLayout(self.layout)

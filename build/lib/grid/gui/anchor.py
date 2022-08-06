@@ -195,7 +195,7 @@ class PnAnchor(QWidget):
             # oposite angle
             angleOp = self.dlMinAg.value() * self.mtp
         else:
-            # if minor axis     
+            # if minor axis
             angle = self.dlMinAg.value() * self.mtp
             # oposite angle
             angleOp = 0 if self.rbMajAg[0].isChecked() else 90
