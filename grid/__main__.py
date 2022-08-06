@@ -21,7 +21,7 @@ if "--test" not in sys.argv:
     timer.timeout.connect(lambda: None)
     timer.start(100)
 
-    app.exec_()
+    app.exec()
 
 else:
     # TEST MODE
