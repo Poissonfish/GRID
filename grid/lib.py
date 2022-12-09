@@ -551,7 +551,7 @@ def pltSegPlot(agents, plotBase, isName=False, isRect=False, isCenter=False, pat
         file = os.path.join(path, prefix+filename)
         if plotBase.max() == 1:
             qimg = getBinQImg(plotBase)
-        elif plotBase.max() < 100:
+        elif plotBase.max() < 10:
             qimg = getIdx8QImg(plotBase, plotBase.max()+1)
         else:
             qimg = getRGBQImg(plotBase)
@@ -570,7 +570,7 @@ def pltSegPlot(agents, plotBase, isName=False, isRect=False, isCenter=False, pat
                     rect = agent.getQRect()
                     if isName:
                         text = "%s\n(%d, %d)" % (agent.name, row+1, col+1)
-                        painter.drawText(rect, Qt.AlignCenter, text)
+                        painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, text)
                     if isRect:
                         painter.drawRect(rect)
                     if isCenter:

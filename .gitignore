@@ -27,3 +27,5 @@ docs/source/*
 env/*
 *.npy
 test/*
+
+build/*
