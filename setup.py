@@ -1,9 +1,14 @@
 import setuptools
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setuptools.setup(
     name="photo_grid",
     version="1.3.1",
     description="A GUI for field segmentation",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/Poissonfish/GRID",
     python_requires=">=3.6",
     classifiers=[
