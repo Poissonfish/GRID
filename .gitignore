@@ -29,5 +29,5 @@ env/*
 test/*
 
 build/*
-.vscode
 
+publish.sh
