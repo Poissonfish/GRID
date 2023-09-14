@@ -1,19 +1,19 @@
 # basic imports
-from .lib import *
-from .gagent import *
-from .gmap import *
-from .gimage import *
-from .guser import *
+from grid.lib import *
+from grid.gagent import *
+from grid.gmap import *
+from grid.gimage import *
+from grid.guser import *
 import os
 import sys
 import warnings
+
 warnings.filterwarnings("ignore")
 
 # self imports
 
 
-class GRID():
-
+class GRID:
     def __init__(self):
         """
         ----------
@@ -40,13 +40,26 @@ class GRID():
 
         self.user.printInfo()
 
-    def run(self, pathImg=None, pathMap=None, pts=None,
-            k=3, features=[0, 1, 2], lsSelect=[0], valShad=0, valSmth=0,
-            nRow=0, nCol=0, nSmooth=100,
-            tol=5, coefGrid=.2,
-            outplot=False,
-            path=None, prefix="GRID",
-            preset=None):
+    def run(
+        self,
+        pathImg=None,
+        pathMap=None,
+        pts=None,
+        k=3,
+        features=[0, 1, 2],
+        lsSelect=[0],
+        valShad=0,
+        valSmth=0,
+        nRow=0,
+        nCol=0,
+        nSmooth=100,
+        tol=5,
+        coefGrid=0.2,
+        outplot=False,
+        path=None,
+        prefix="GRID",
+        preset=None,
+    ):
         """
         ----------
         Parameters
@@ -55,22 +68,31 @@ class GRID():
 
         if preset is not None:
             params = getPickledGRID(preset)
-            self.run(pathImg=pathImg, pathMap=pathMap, pts=pts,
-                     nSmooth=nSmooth,
-                     tol=tol,
-                     **params, outplot=outplot)
+            self.run(
+                pathImg=pathImg,
+                pathMap=pathMap,
+                pts=pts,
+                nSmooth=nSmooth,
+                tol=tol,
+                **params,
+                outplot=outplot
+            )
         else:
             prog = initProgress(6, "loading data")
             self.loadData(pathImg=pathImg, pathMap=pathMap, outplot=outplot)
             prog = updateProgress(prog, 1, "cropping")
             self.cropImg(pts=pts, outplot=outplot)
             prog = updateProgress(prog, 1, "binarizing")
-            self.binarizeImg(k=k, features=features,
-                             lsSelect=lsSelect,
-                             valShad=valShad, valSmth=valSmth, outplot=outplot)
+            self.binarizeImg(
+                k=k,
+                features=features,
+                lsSelect=lsSelect,
+                valShad=valShad,
+                valSmth=valSmth,
+                outplot=outplot,
+            )
             prog = updateProgress(prog, 1, "locating plots")
-            self.findPlots(nRow=nRow, nCol=nCol,
-                           nSmooth=nSmooth, outplot=outplot)
+            self.findPlots(nRow=nRow, nCol=nCol, nSmooth=nSmooth, outplot=outplot)
             prog = updateProgress(prog, 1, "segmenting")
             self.cpuSeg(tol=tol, coefGrid=coefGrid, outplot=outplot)
             prog = updateProgress(prog, 1, "exporting")
@@ -129,16 +151,13 @@ class GRID():
         ----------
         """
         if pathImg is None:
-            self.imgs.load(
-                pathImg=os.path.join(self.user.dirGrid, "demo/seg_img.jpg"))
-            self.map.load(
-                pathMap=os.path.join(self.user.dirGrid, "demo/seg_map.csv"))
+            self.imgs.load(pathImg=os.path.join(self.user.dirGrid, "demo/seg_img.jpg"))
+            self.map.load(pathMap=os.path.join(self.user.dirGrid, "demo/seg_map.csv"))
             self.path_out = os.path.expanduser("~")
         else:
             self.imgs.load(pathImg=pathImg, pathShp=pathShp)
             self.map.load(pathMap=pathMap)
-            self.path_out = os.path.abspath(
-                os.path.join(os.path.dirname(pathImg)))
+            self.path_out = os.path.abspath(os.path.join(os.path.dirname(pathImg)))
 
         if outplot:
             pltImShow(self.imgs.get("raw")[:, :, :3])
@@ -156,8 +175,16 @@ class GRID():
         if outplot:
             pltImShow(self.imgs.get("crop")[:, :, :3])
 
-    def binarizeImg(self, k=3, features=[0, 1, 2], lsSelect=[0], valShad=0,
-                    valSmth=0, colorOnly=False, outplot=False):
+    def binarizeImg(
+        self,
+        k=3,
+        features=[0, 1, 2],
+        lsSelect=[0],
+        valShad=0,
+        valSmth=0,
+        colorOnly=False,
+        outplot=False,
+    ):
         """
         ----------
         Parameters
@@ -196,17 +223,19 @@ class GRID():
         if self.subflag and "__main__.py" in sys.argv[0]:
             self.subflag = False
             QTimer.singleShot(self.window, lambda: setattr(self, "flag", True))
-            QTimer.singleShot(
-                self.window, lambda: setattr(self, "subflag", True))
+            QTimer.singleShot(self.window, lambda: setattr(self, "subflag", True))
 
         # Plot
         if outplot:
             pltImShowMulti(
-                imgs=[self.imgs.get('crop')[:, :, :3],
-                      self.imgs.get('kmean'),
-                      self.imgs.get('binOrg'),
-                      self.imgs.get('bin')],
-                titles=["Original", "K-Means", "Binarized", "Finalized"])
+                imgs=[
+                    self.imgs.get("crop")[:, :, :3],
+                    self.imgs.get("kmean"),
+                    self.imgs.get("binOrg"),
+                    self.imgs.get("bin"),
+                ],
+                titles=["Original", "K-Means", "Binarized", "Finalized"],
+            )
 
     def findPlots(self, nRow=0, nCol=0, nSmooth=100, outplot=False):
         """
@@ -218,17 +247,22 @@ class GRID():
         # iamge
         self.imgs.readyForSeg()
 
-        self.map.findPlots(imgRGB=self.imgs.get("crop")[:, :, :3],
-                           imgBin=self.imgs.get("binSeg"),
-                           nRow=nRow, nCol=nCol, nSmooth=nSmooth)
+        self.map.findPlots(
+            imgRGB=self.imgs.get("crop")[:, :, :3],
+            imgBin=self.imgs.get("binSeg"),
+            nRow=nRow,
+            nCol=nCol,
+            nSmooth=nSmooth,
+        )
 
         self.agents.setup(gmap=self.map, gimg=self.imgs)
 
         if outplot:
-            pltLinesPlot(gmap=self.map, agents=self.agents.agents,
-                         img=self.imgs.get('binSeg'))
+            pltLinesPlot(
+                gmap=self.map, agents=self.agents.agents, img=self.imgs.get("binSeg")
+            )
 
-    def cpuSeg(self, tol=5, coefGrid=.2, outplot=False):
+    def cpuSeg(self, tol=5, coefGrid=0.2, outplot=False):
         """
         ----------
         Parameters

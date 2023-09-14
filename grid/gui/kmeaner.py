@@ -7,20 +7,19 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
 # self imports
-from ..grid import *
-from .customQt import *
+from grid.grid import *
+from grid.gui.customQt import *
 
 
 class PnKmeaner(QWidget):
-    """
-    """
+    """ """
 
     def __init__(self, grid):
         super().__init__()
         self.setFocusPolicy(Qt.StrongFocus)
         self.setFocus()
         self.update()
-        '''attr'''
+        """attr"""
         self.grid = grid
         # # grid params.
         self.nFeatures = min(self.grid.imgs.depth, 9)
@@ -44,7 +43,7 @@ class PnKmeaner(QWidget):
         self.lo_ft = QHBoxLayout()
         self.ck_ft = []
         for i in range(self.nFeatures):
-            checkbox = QCheckBox(str(i+1))
+            checkbox = QCheckBox(str(i + 1))
             # if i < 3:
             checkbox.setChecked(True)
             checkbox.stateChanged.connect(self.change_k)
@@ -65,10 +64,10 @@ class PnKmeaner(QWidget):
         self.gr_cusb = QGroupBox("Custom")
         self.lo_cusb = QHBoxLayout()
         self.ck_cusb = []
-        for i in range(1, self.kMax+1):
+        for i in range(1, self.kMax + 1):
             checkbox = QCheckBox(str(i))
             checkbox.stateChanged.connect(self.custom_cut)
-            if i>3:
+            if i > 3:
                 checkbox.setEnabled(False)
             self.ck_cusb.extend([checkbox])
         self.ls_bin = [0]
@@ -79,8 +78,7 @@ class PnKmeaner(QWidget):
         self.rb_rgb = QRadioButton("RGB (S)")
         self.rb_k = QRadioButton("K-Means (D)")
         # zoom
-        self.gr_zm = QGroupBox(
-            "Magnification Levels (Right-click to switch)")
+        self.gr_zm = QGroupBox("Magnification Levels (Right-click to switch)")
         self.lo_zm = QHBoxLayout()
         self.rb_1x = QRadioButton("1X")
         self.rb_15x = QRadioButton("1.5X")
@@ -103,11 +101,11 @@ class PnKmeaner(QWidget):
         self.sc_right.setStyleSheet("QScrollBar {width:0px;}")
         self.sc_right.setWidgetResizable(True)
 
-        '''initialize UI'''
+        """initialize UI"""
         self.initUI()
 
     def initUI(self):
-        '''img preview (left)'''
+        """img preview (left)"""
         # components
         self.bt_ccw.clicked.connect(self.rotateCCW)
         self.bt_cw.clicked.connect(self.rotateCW)
@@ -116,7 +114,7 @@ class PnKmeaner(QWidget):
         self.lo_left.addWidget(self.bt_ccw, 1, 0)
         self.lo_left.addWidget(self.bt_cw, 1, 1)
         self.gr_left.setLayout(self.lo_left)
-        '''pre keans (right)'''
+        """pre keans (right)"""
         # components
         self.sl_k.setMinimum(2)
         self.sl_k.setMaximum(self.kMax)
@@ -133,7 +131,7 @@ class PnKmeaner(QWidget):
         self.lo_pre.addWidget(self.gr_k)
         self.gr_pre.setLayout(self.lo_pre)
 
-        '''binarization'''
+        """binarization"""
         # component
         self.gr_cut.setCheckable(True)
         self.gr_cut.setChecked(True)
@@ -157,7 +155,7 @@ class PnKmeaner(QWidget):
         self.lo_bin.addWidget(self.gr_cusb)
         self.gr_bin.setLayout(self.lo_bin)
 
-        '''pro keans (right)'''
+        """pro keans (right)"""
         # components
         self.sl_shad.setMinimum(0)
         self.sl_shad.setMaximum(255)
@@ -189,7 +187,7 @@ class PnKmeaner(QWidget):
         self.lo_zm.addWidget(self.rb_3x)
         self.gr_zm.setLayout(self.lo_zm)
 
-        '''display'''
+        """display"""
         # components
         self.rb_bin.setChecked(True)
         self.rb_bin.toggled.connect(self.wg_img.switch_imgB)
@@ -201,7 +199,7 @@ class PnKmeaner(QWidget):
         self.lo_dis.addWidget(self.rb_k)
         self.gr_dis.setLayout(self.lo_dis)
 
-        '''right'''
+        """right"""
         self.lo_right.addWidget(self.gr_pre)
         self.lo_right.addWidget(self.gr_bin)
         self.lo_right.addWidget(self.gr_pro)
@@ -210,13 +208,15 @@ class PnKmeaner(QWidget):
         self.pn_right.setLayout(self.lo_right)
         self.sc_right.setWidget(self.pn_right)
 
-        '''assemble'''
-        policy_right = QSizePolicy(QSizePolicy.Policy.Preferred,
-                                   QSizePolicy.Policy.Preferred)
+        """assemble"""
+        policy_right = QSizePolicy(
+            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred
+        )
         policy_right.setHorizontalStretch(2)
         self.sc_right.setSizePolicy(policy_right)
-        policy_left = QSizePolicy(QSizePolicy.Policy.Preferred,
-                                  QSizePolicy.Policy.Preferred)
+        policy_left = QSizePolicy(
+            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred
+        )
         policy_left.setHorizontalStretch(3)
         self.gr_left.setSizePolicy(policy_left)
         self.layout.addWidget(self.gr_left)
@@ -225,7 +225,8 @@ class PnKmeaner(QWidget):
         self.change_k()  # initialize kmeans
         self.show()
 
-        '''collapse'''
+        """collapse"""
+
     #     self.gr_pre.setCheckable(True)
     #     self.gr_pre.setChecked(True)
     #     self.gr_pre.toggled.connect(self.collapsePre)
@@ -288,9 +289,9 @@ class PnKmeaner(QWidget):
         self.grid.binarizeImg(
             k=self.sl_k.value(),
             features=self.features,
-            lsSelect=self.lsSelect, 
+            lsSelect=self.lsSelect,
             valShad=self.sl_shad.value(),
-            valSmth=self.sl_gb.value()
+            valSmth=self.sl_gb.value(),
         )
         self.refresh()
 
@@ -363,8 +364,9 @@ class PnKmeaner(QWidget):
             self.rotateCCW()
         elif event.key() == Qt.Key_E:
             self.rotateCW()
+
     # def keyReleaseEvent(self, event):
-        # self.rb_bin.setChecked(True)
+    # self.rb_bin.setChecked(True)
 
     def refresh(self):
         self.rb_bin.setChecked(True)
@@ -411,7 +413,7 @@ class Widget_Kmeans(Widget_Img):
         self.updateMag()
 
     def switch_imgK(self):
-        super().make_idx8_img(self.grid.imgs.get("kmean"), self.grid.imgs.getParam('k'))
+        super().make_idx8_img(self.grid.imgs.get("kmean"), self.grid.imgs.getParam("k"))
         self.repaint()
         self.updateMag()
 
@@ -426,12 +428,14 @@ class Widget_Kmeans(Widget_Img):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.RightButton:
-            self.zoom = (self.zoom+1) % 3
+            self.zoom = (self.zoom + 1) % 3
             self.mouseMoveEvent(event)
 
     def updateMag(self):
         pos = self.mapFromGlobal(QCursor().pos())
         if self.zoom != 0:
-            magnifying_glass(self, pos, area=int(self.width()/7), zoom=self.zoom*1.5)
+            magnifying_glass(
+                self, pos, area=int(self.width() / 7), zoom=self.zoom * 1.5
+            )
         else:
             self.setCursor(QCursor(Qt.ArrowCursor))

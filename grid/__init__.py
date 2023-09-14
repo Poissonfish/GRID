@@ -9,6 +9,19 @@ import sys
 from urllib import request
 from pkg_resources import parse_version
 
+# basic imports
+import sys
+import os
+
+# 3rd party imports
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QTimer
+import qdarkstyle
+
+
+# self imports
+from grid.gridGUI import *
+
 
 def main():
     if "__main__" not in sys.argv[0]:
@@ -71,9 +84,17 @@ def main():
         print("~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~")
         print("\n")
 
+    app = QApplication(sys.argv)
+    if "--light" not in sys.argv:
+        app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+
+    grid = GRID_GUI()
+    timer = QTimer()
+    timer.timeout.connect(lambda: None)
+    timer.start(100)
+    print("LAUNCHING APPLICATION")
+    app.exec()
+
 
 if __name__ == "__main__":
     main()
-
-# self imports
-from .grid import *

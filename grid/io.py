@@ -14,7 +14,7 @@ import shapefile
 import cv2
 
 # self import
-from .lib import (
+from grid.lib import (
     find_small_shape,
     initProgress,
     updateProgress,
@@ -22,7 +22,7 @@ from .lib import (
     pltSegPlot,
     recover_scale,
 )
-from .dir import Dir
+from grid.dir import Dir
 
 
 def loadImg(path):

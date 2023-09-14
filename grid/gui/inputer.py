@@ -4,14 +4,14 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
 # self imports
-from ..grid import *
+from grid.grid import *
+
 
 class PnInputer(QWidget):
-    """
-    """
+    """ """
+
     def __init__(self, grid):
-        """
-        """
+        """ """
 
         super().__init__()
         self.grid = grid
@@ -31,7 +31,8 @@ class PnInputer(QWidget):
         self.gr_demo = QGroupBox("Demo")
         self.lo_demo = QVBoxLayout()
         self.lb_demo = QLabel(
-            "Will use sample files to demo the program. Or go to <a href='https://poissonfish.github.io/GRID/index.html'> User Manual </a>")
+            "Will use sample files to demo the program. Or go to <a href='https://poissonfish.github.io/GRID/index.html'> User Manual </a>"
+        )
         self.lb_demo.setOpenExternalLinks(True)
 
         # self
@@ -40,8 +41,7 @@ class PnInputer(QWidget):
         self.initUI()
 
     def initUI(self):
-        """
-        """
+        """ """
 
         # USER
         ## GUI components
@@ -94,45 +94,42 @@ class PnInputer(QWidget):
         self.show()
 
     def toggle(self, groupbox):
-        """
-        """
+        """ """
 
-        if (groupbox.title() == "Demo"):
+        if groupbox.title() == "Demo":
             self.gr_user.setChecked(not self.gr_user.isChecked())
-        elif (groupbox.title() != "Demo"):
+        elif groupbox.title() != "Demo":
             self.gr_demo.setChecked(not self.gr_demo.isChecked())
 
     def assign_PathImg(self):
-        """
-        """
+        """ """
 
         fileter = "Images (*.tif *.jpg *.jpeg *.png)"
         path = QFileDialog().getOpenFileName(self, "", "", fileter)[0]
         self.fd_img.setText(path)
 
     def assign_PathMap(self):
-        """
-        """
+        """ """
 
         fileter = "Map (*.csv *.txt)"
         path = QFileDialog().getOpenFileName(self, "", "", fileter)[0]
         self.fd_map.setText(path)
 
     def assign_PathShp(self):
-        """
-        """
+        """ """
 
         fileter = "Shape (*.shp)"
         path = QFileDialog().getOpenFileName(self, "", "", fileter)[0]
         self.fd_shp.setText(path)
 
     def run(self):
-        """
-        """
+        """ """
         if self.gr_user.isChecked():
-            self.grid.loadData(pathImg=self.fd_img.text(),
-                               pathMap=self.fd_map.text(),
-                               pathShp=self.fd_shp.text())
+            self.grid.loadData(
+                pathImg=self.fd_img.text(),
+                pathMap=self.fd_map.text(),
+                pathShp=self.fd_shp.text(),
+            )
         else:
             self.grid.loadData()  # load demo files
 

@@ -3,8 +3,8 @@ import numpy as np
 import shapefile
 
 # self imports
-from .io import *
-from .lib import *
+from grid.io import *
+from grid.lib import *
 
 
 class GImage:

@@ -4,49 +4,46 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
 # self imports
-from ..lib import *
-from ..grid import *
-from .customQt import * 
+from grid.lib import *
+from grid.grid import *
+from grid.gui.customQt import *
 
 
 class PnCropper(QGroupBox):
-    """
-    """
+    """ """
 
     def __init__(self, grid):
-        """
-        """
+        """ """
 
         super().__init__()
-        self.setStyleSheet("""
+        self.setStyleSheet(
+            """
         QGroupBox::title{
             subcontrol-origin: margin;
             subcontrol-position: top center;
         }
-        """)
+        """
+        )
 
         # attr.
         self.grid = grid
         self.layout = QVBoxLayout()
-        self.wgImg = Widget_ViewCrop(grid, self.grid.imgs.get('raw'))
+        self.wgImg = Widget_ViewCrop(grid, self.grid.imgs.get("raw"))
         self.initUI()
 
     def initUI(self):
-        """
-        """
+        """ """
 
         self.layout.addWidget(self.wgImg)
         self.setLayout(self.layout)
         self.show()
 
     def run(self):
-        """
-        """
+        """ """
         self.grid.cropImg(pts=self.wgImg.getPinnedPoints())
 
 
 class Widget_ViewCrop(Widget_Img):
-
     def __init__(self, grid, img):
         super().__init__()
         self.setMouseTracking(True)
@@ -59,18 +56,18 @@ class Widget_ViewCrop(Widget_Img):
         self.zoom = 1
         self.ratio = 1
         self.pts = []
-        self.pts_prev = [] # for rotation
+        self.pts_prev = []  # for rotation
         self.n_marks = 0
         self.imgH, self.imgW = img.shape[0], img.shape[1]
 
         # mouse event
         self.hasDrag = 0
-        self.isDragDefine = 0 # is dragging to define rectangle
-        self.isDragSize = 0 # is resizing?
+        self.isDragDefine = 0  # is dragging to define rectangle
+        self.isDragSize = 0  # is resizing?
         self.sen_resize = 30
         self.sen_rotate = 150
         self.whichState = -1
-        '''
+        """
         0   4   1
            ___
         7 | 8 | 5
@@ -78,7 +75,7 @@ class Widget_ViewCrop(Widget_Img):
         3   6   2
 
         9 : rotate
-        '''
+        """
         #
 
         self.initUI()
@@ -97,23 +94,34 @@ class Widget_ViewCrop(Widget_Img):
 
         if self.hasDrag:
             # has drawn points
-            points = QPolygon([QPoint(self.pts[i][0], self.pts[i][1])
-                              for i in range(4)])
+            points = QPolygon(
+                [QPoint(self.pts[i][0], self.pts[i][1]) for i in range(4)]
+            )
             painter.drawPolygon(points)
         else:
             if len(self.pts) == 1:
-                painter.drawLine(QPoint(self.pts[0][0], self.pts[0][1]),
-                                 QPoint(self.pos_move[0], self.pos_move[1]))
+                painter.drawLine(
+                    QPoint(self.pts[0][0], self.pts[0][1]),
+                    QPoint(self.pos_move[0], self.pos_move[1]),
+                )
             elif len(self.pts) == 2:
-                points = QPolygon([QPoint(self.pts[0][0], self.pts[0][1]),
-                                   QPoint(self.pts[1][0], self.pts[1][1]), 
-                                   QPoint(self.pos_move[0], self.pos_move[1])])
+                points = QPolygon(
+                    [
+                        QPoint(self.pts[0][0], self.pts[0][1]),
+                        QPoint(self.pts[1][0], self.pts[1][1]),
+                        QPoint(self.pos_move[0], self.pos_move[1]),
+                    ]
+                )
                 painter.drawPolygon(points)
             elif len(self.pts) == 3:
-                points = QPolygon([QPoint(self.pts[0][0], self.pts[0][1]),
-                                   QPoint(self.pts[1][0], self.pts[1][1]),
-                                   QPoint(self.pts[2][0], self.pts[2][1]),
-                                   QPoint(self.pos_move[0], self.pos_move[1])])
+                points = QPolygon(
+                    [
+                        QPoint(self.pts[0][0], self.pts[0][1]),
+                        QPoint(self.pts[1][0], self.pts[1][1]),
+                        QPoint(self.pts[2][0], self.pts[2][1]),
+                        QPoint(self.pos_move[0], self.pos_move[1]),
+                    ]
+                )
                 painter.drawPolygon(points)
 
         painter.end()
@@ -144,13 +152,12 @@ class Widget_ViewCrop(Widget_Img):
         self.pos_move = (event.pos().x(), event.pos().y())
 
         if not self.isDragSize and self.hasDrag and len(self.pts) == 4:
-            '''
+            """
             hover around when the rectangle exists
-            '''
+            """
 
             # check distance of each corner
-            dist_corner = [euclidean(self.pos_move, self.pts[i])
-                           for i in range(4)]
+            dist_corner = [euclidean(self.pos_move, self.pts[i]) for i in range(4)]
 
             # check distance for each side
             len_n = euclidean(self.pts[0], self.pts[1])
@@ -163,8 +170,7 @@ class Widget_ViewCrop(Widget_Img):
             dist_side_s = sum(np.array(dist_corner)[[2, 3]]) - len_s
             dist_side_w = sum(np.array(dist_corner)[[3, 0]]) - len_w
 
-            dist_side = [dist_side_n, dist_side_e,
-                         dist_side_s, dist_side_w]
+            dist_side = [dist_side_n, dist_side_e, dist_side_s, dist_side_w]
 
             # concatenate the distances
             dist_all = dist_corner + dist_side
@@ -194,9 +200,9 @@ class Widget_ViewCrop(Widget_Img):
                 self.whichState = -1
 
         elif self.isDragSize:
-            '''
+            """
             Draging to resize
-            '''
+            """
 
             # capture delta
             dx = self.pos_move[0] - self.pos_move_prev[0]
@@ -235,22 +241,23 @@ class Widget_ViewCrop(Widget_Img):
                 v_cur = self.pos_move - org
                 angle = find_angle(v_prev, v_cur)
                 self.pts = np.array(
-                    rotatePts(self.pts_prev, angle, org), dtype=int).copy()
+                    rotatePts(self.pts_prev, angle, org), dtype=int
+                ).copy()
 
         # cursor
         magArea = int(min(self.rgX[1] - self.rgX[0], self.rgY[1] - self.rgY[0]) / 5)
         if self.whichState < 8:
             if self.zoom != 0:
-                magnifying_glass(self, event.pos(),
-                                area=magArea, zoom=self.zoom * 2.5)
+                magnifying_glass(self, event.pos(), area=magArea, zoom=self.zoom * 2.5)
             else:
                 self.setCursor(QCursor(Qt.ClosedHandCursor))
         elif self.whichState == 8:
             self.setCursor(QCursor(Qt.SizeAllCursor))
         elif self.whichState == 9:
             size = 32
-            pixmap = QPixmap(os.path.join(
-                self.grid.user.dirGrid, "res/rotate.png")).scaled(size, size)
+            pixmap = QPixmap(
+                os.path.join(self.grid.user.dirGrid, "res/rotate.png")
+            ).scaled(size, size)
             self.setCursor(QCursor(pixmap))
 
         self.pos_move_prev = self.pos_move
@@ -267,12 +274,17 @@ class Widget_ViewCrop(Widget_Img):
         self.resetStatus()
 
     def getPinnedPoints(self):
-        self.ratio = (self.imgW) / (self.width()) if self.isFitWidth else (self.imgH) / (self.height())
-        pts = [[(pt[0] - self.rgX[0]) * (self.ratio),
-                (pt[1] - self.rgY[0]) * (self.ratio)] for pt in self.pts]
+        self.ratio = (
+            (self.imgW) / (self.width())
+            if self.isFitWidth
+            else (self.imgH) / (self.height())
+        )
+        pts = [
+            [(pt[0] - self.rgX[0]) * (self.ratio), (pt[1] - self.rgY[0]) * (self.ratio)]
+            for pt in self.pts
+        ]
         if len(pts) < 4:
-            pts = [[0, 0], [self.imgW, 0],
-                   [self.imgW, self.imgH], [0, self.imgH]]
+            pts = [[0, 0], [self.imgW, 0], [self.imgW, self.imgH], [0, self.imgH]]
         return pts
 
     def resetStatus(self):
@@ -311,7 +323,7 @@ class Widget_ViewCrop(Widget_Img):
 #     eq: ax + by = c
 #     """
 #     slp = (pt1[1] - pt2[1]) / (pt1[0] - pt2[0])
-    
+
 #     if slp == 0:
 #         # horizon line
 #         return [pt1[0], pt0[1]], [pt2[0], pt0[1]]
@@ -349,5 +361,3 @@ class Widget_ViewCrop(Widget_Img):
 # getShiftPts([1, 3], [5, 3], [4, 6])
 # np.linalg.solve(np.array([[3, 2], [5, 2]]),
 #                 np.array([1, 3]))
-
-        

@@ -1,4 +1,4 @@
-# basic imports 
+# basic imports
 from enum import Enum
 
 # 3rd party imports
@@ -7,14 +7,14 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
 # self imports
-from .grid import *
-from .gui import *
-from .lib import *
-from .__init__ import __version__
+from grid.grid import *
+from grid.gui import *
+from grid.lib import *
+from grid.__init__ import __version__
+
 
 class GRID_GUI(QMainWindow):
-    """
-    """
+    """ """
 
     def __init__(self, gridInput=None, idxPn=None):
         """
@@ -26,7 +26,8 @@ class GRID_GUI(QMainWindow):
         #         QWidget {
         #     font: 16pt Trebuchet MS
         # }
-        self.setStyleSheet("""
+        self.setStyleSheet(
+            """
         QWidget {
             font: 16pt Trebuchet MS
         }
@@ -40,7 +41,8 @@ class GRID_GUI(QMainWindow):
             border-radius: 9px;
             margin-top: 0.5em;
         }
-        """)
+        """
+        )
 
         # CLI
         self.grid = GRID()
@@ -53,7 +55,9 @@ class GRID_GUI(QMainWindow):
         self.pnNavi = QWidget()
         self.btNext = QPushButton()
         self.btPrev = QPushButton()
-        self.prog = GProg(size=5, name="Specify an image to proceed", widget=self.pnContent)
+        self.prog = GProg(
+            size=5, name="Specify an image to proceed", widget=self.pnContent
+        )
         self.layout = None
 
         # Shortcut
@@ -64,8 +68,8 @@ class GRID_GUI(QMainWindow):
         self.initUI()
 
     def startover(self):
-        while self.pnMain.count()!=0:
-            widget = self.pnMain.widget(self.pnMain.count()-1)
+        while self.pnMain.count() != 0:
+            widget = self.pnMain.widget(self.pnMain.count() - 1)
             self.pnMain.removeWidget(widget)
 
         self.nPanel = -1
@@ -93,15 +97,15 @@ class GRID_GUI(QMainWindow):
         else:
             # or use shortcut
             self.grid = self.gridInput
-            if self.idxPn==0:
+            if self.idxPn == 0:
                 self.showInputer()
-            elif self.idxPn==1:
+            elif self.idxPn == 1:
                 self.showCropper()
-            elif self.idxPn==2:
+            elif self.idxPn == 2:
                 self.showKMeaner()
-            elif self.idxPn==3:
+            elif self.idxPn == 3:
                 self.showAnchor()
-            elif self.idxPn==4:
+            elif self.idxPn == 4:
                 self.showOutputer()
 
         # show
@@ -111,57 +115,53 @@ class GRID_GUI(QMainWindow):
         bugmsg("show input")
         self.prog.set(n=0, name="Specify (or drag & drop) an image to proceed")
         self.assembleNavigation(nameNext="Load Files ->", oneSide=True)
-        self.btNext.clicked.connect(
-            lambda: self.showCropper())
+        self.btNext.clicked.connect(lambda: self.showCropper())
         self.updateMainPn(panel=Panels.INPUTER, isNew=isNew)
 
     def showCropper(self, isNew=True):
         bugmsg("crop")
-        self.prog.set(n=1, name="Left-click to define AOI. Right-click to change zoom-in rate. After initialing the AOI:\nDrag at AOI's corner/side to adjust the border. Drag at AOI's center to move the whole AOI. Drag at the area further away from AOI to rotate")
+        self.prog.set(
+            n=1,
+            name="Left-click to define AOI. Right-click to change zoom-in rate. After initialing the AOI:\nDrag at AOI's corner/side to adjust the border. Drag at AOI's center to move the whole AOI. Drag at the area further away from AOI to rotate",
+        )
         self.assembleNavigation()
-        self.btPrev.clicked.connect(
-            lambda: self.showInputer(isNew=False))
-        self.btNext.clicked.connect(
-            lambda: self.showKMeaner())
+        self.btPrev.clicked.connect(lambda: self.showInputer(isNew=False))
+        self.btNext.clicked.connect(lambda: self.showKMeaner())
         self.updateMainPn(panel=Panels.CROPPER, isNew=isNew)
 
     def showKMeaner(self, isNew=True):
         bugmsg("kmean")
-        self.prog.set(
-            n=2, name="Define the pixels of interest (POI)")
+        self.prog.set(n=2, name="Define the pixels of interest (POI)")
         self.assembleNavigation()
-        self.btPrev.clicked.connect(
-            lambda: self.showCropper(isNew=False))
+        self.btPrev.clicked.connect(lambda: self.showCropper(isNew=False))
         if self.grid.imgs.hasShp:
-            self.btNext.clicked.connect(
-                lambda: self.showOutputer())
+            self.btNext.clicked.connect(lambda: self.showOutputer())
         else:
-            self.btNext.clicked.connect(
-                lambda: self.showAnchor())
+            self.btNext.clicked.connect(lambda: self.showAnchor())
         self.updateMainPn(panel=Panels.KMEANER, isNew=isNew)
 
     def showAnchor(self, isNew=True):
         bugmsg("anchor")
         self.prog.set(
-            n=3, name="Define the plot centers: LEFT-CLICK to add, RIGHT-CLICK to remove, DRAG to adjust")
+            n=3,
+            name="Define the plot centers: LEFT-CLICK to add, RIGHT-CLICK to remove, DRAG to adjust",
+        )
         self.assembleNavigation()
-        self.btPrev.clicked.connect(
-            lambda: self.showKMeaner(isNew=False))
-        self.btNext.clicked.connect(
-            lambda: self.showOutputer())
+        self.btPrev.clicked.connect(lambda: self.showKMeaner(isNew=False))
+        self.btNext.clicked.connect(lambda: self.showOutputer())
         self.updateMainPn(panel=Panels.ANCHOR, isNew=isNew)
 
     def showOutputer(self, isNew=True):
         bugmsg("show output")
         self.prog.set(
-            n=4, name="Finalize the segmentation and export results: Drag to adjust borders")
+            n=4,
+            name="Finalize the segmentation and export results: Drag to adjust borders",
+        )
         self.assembleNavigation(nameNext="Finish")
         if self.grid.imgs.hasShp:
-            self.btPrev.clicked.connect(
-                lambda: self.showKMeaner(isNew=False))
+            self.btPrev.clicked.connect(lambda: self.showKMeaner(isNew=False))
         else:
-            self.btPrev.clicked.connect(
-                lambda: self.showAnchor(isNew=False))
+            self.btPrev.clicked.connect(lambda: self.showAnchor(isNew=False))
         self.btNext.clicked.connect(lambda: self.finalize())
         self.updateMainPn(panel=Panels.OUTPUTER, isNew=isNew)
 
@@ -192,7 +192,7 @@ class GRID_GUI(QMainWindow):
             token_err = False
         # traverse backward
         else:
-            widget = self.pnMain.widget(panel.value[0]+1)
+            widget = self.pnMain.widget(panel.value[0] + 1)
             self.pnMain.removeWidget(widget)
             self.nPanel -= 1
 
@@ -214,19 +214,21 @@ class GRID_GUI(QMainWindow):
         msgBox.setText("Finished!")
         msgBox.setInformativeText("Save and start another job?")
         msgBox.setStandardButtons(
-            QMessageBox.StandardButton.Yes|
-            QMessageBox.StandardButton.No|
-            QMessageBox.StandardButton.Discard)
+            QMessageBox.StandardButton.Yes
+            | QMessageBox.StandardButton.No
+            | QMessageBox.StandardButton.Discard
+        )
 
-        msgBox.button(QMessageBox.StandardButton.Yes).setText("Save and stay in current work")
+        msgBox.button(QMessageBox.StandardButton.Yes).setText(
+            "Save and stay in current work"
+        )
         msgBox.button(QMessageBox.StandardButton.No).setText("Save and start new job")
         msgBox.button(QMessageBox.StandardButton.Discard).setText("Cancel")
-        msgBox.setSizePolicy(QSizePolicy.Policy.Expanding,
-                             QSizePolicy.Policy.Expanding)
+        msgBox.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         returnValue = msgBox.exec()
-        path     = self.pnMain.currentWidget().fd_output.text()
-        prefix   = self.pnMain.currentWidget().fd_project.text()
+        path = self.pnMain.currentWidget().fd_output.text()
+        prefix = self.pnMain.currentWidget().fd_project.text()
         isSimple = self.pnMain.currentWidget().ck_simple.isChecked()
         if returnValue == QMessageBox.StandardButton.Yes:
             self.grid.save(path=path, prefix=prefix, simple=isSimple)
@@ -246,7 +248,7 @@ class GRID_GUI(QMainWindow):
         center = QPoint(int(size_window.width() / 2), int(size_window.height() / 2))
         # get the app geometry (should be a rect object)
         rect = self.geometry()
-        # update the center coordinate 
+        # update the center coordinate
         rect.moveCenter(center)
         self.setGeometry(rect)
 
@@ -295,7 +297,6 @@ class Panels(Enum):
     OUTPUTER = 4, PnOutputer
 
 
-
 # ARCHIVE:
 # def test(self):
 #     import json
@@ -330,7 +331,7 @@ class Panels(Enum):
 
 #     # show
 #     self.assembleAndShow()
-# 
+#
 # def updateMainPn(self, panel, isNew=True):
 #     """
 #     ----------
@@ -388,4 +389,4 @@ class Panels(Enum):
 
 #     # show
 #     self.assembleAndShow()
-# 
+#

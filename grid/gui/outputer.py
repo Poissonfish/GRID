@@ -9,15 +9,14 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
 # self imports
-from ..grid import *
-from ..io import *
-from .customQt import *
+from grid.grid import *
+from grid.io import *
+from grid.gui.customQt import *
 
 
 class PnOutputer(QWidget):
     def __init__(self, grid):
-        '''
-        '''
+        """ """
         super().__init__()
         self.setFocusPolicy(Qt.StrongFocus)
         self.setFocus()
@@ -26,9 +25,9 @@ class PnOutputer(QWidget):
         self.runDefaultSeg()
 
         self.layout = QHBoxLayout()
-        '''left side'''
+        """left side"""
         self.wg_img = Widget_Seg(grid)
-        '''right side'''
+        """right side"""
         self.pn_right = QWidget()
         self.lo_right = QVBoxLayout()
         self.sc_right = QScrollArea()
@@ -79,11 +78,11 @@ class PnOutputer(QWidget):
         self.fd_output = QLineEdit(self.grid.path_out)
         self.bt_output = QPushButton("Browse")
         self.ck_simple = QCheckBox("Simple output")
-        '''ui'''
+        """ui"""
         self.initUI()
 
     def initUI(self):
-        '''seg-auto (right)'''
+        """seg-auto (right)"""
         # components
         self.sl_grid.setMinimum(0)
         self.sl_grid.setMaximum(10)
@@ -99,7 +98,7 @@ class PnOutputer(QWidget):
         self.gr_grid.setLayout(self.lo_grid)
         self.lo_auto.addWidget(self.gr_grid)
         self.gr_auto.setLayout(self.lo_auto)
-        '''seg-fix (right)'''
+        """seg-fix (right)"""
         # components
         self.sl_width.setMinimum(0)
         self.sl_width.setMaximum(100)
@@ -144,12 +143,12 @@ class PnOutputer(QWidget):
         self.lo_fix.addWidget(self.ck_evenH)
         self.lo_fix.addWidget(self.ck_evenV)
         self.gr_fix.setLayout(self.lo_fix)
-        '''seg (right)'''
+        """seg (right)"""
         # layout
         self.lo_seg.addWidget(self.gr_auto)
         self.lo_seg.addWidget(self.gr_fix)
         self.gr_seg.setLayout(self.lo_seg)
-        '''tool'''
+        """tool"""
         self.rb_adj.setChecked(True)
         self.rb_ct.toggled.connect(lambda: self.changeTool(index=0))
         self.rb_adj.toggled.connect(lambda: self.changeTool(index=1))
@@ -160,7 +159,7 @@ class PnOutputer(QWidget):
         self.lo_tol.addWidget(self.rb_vp, 1, 0)
         self.lo_tol.addWidget(self.rb_hp, 1, 1)
         self.gr_tol.setLayout(self.lo_tol)
-        '''display (right)'''
+        """display (right)"""
         # components
         self.rb_srgb.setChecked(True)
         self.rb_srgb.toggled.connect(self.wg_img.switch_imgSVis)
@@ -169,7 +168,7 @@ class PnOutputer(QWidget):
         self.lo_dis.addWidget(self.rb_srgb)
         self.lo_dis.addWidget(self.rb_rgb)
         self.gr_dis.setLayout(self.lo_dis)
-        '''output (right)'''
+        """output (right)"""
         # components
         font = self.fd_project.font()
         font.setPointSize(25)
@@ -186,7 +185,7 @@ class PnOutputer(QWidget):
         self.lo_out.addWidget(self.bt_output, 1, 2)
         self.lo_out.addWidget(self.ck_simple, 2, 0, 1, 3)
         self.gr_out.setLayout(self.lo_out)
-        '''layout'''
+        """layout"""
         # left
         # NONE
         # right
@@ -198,10 +197,14 @@ class PnOutputer(QWidget):
         self.pn_right.setLayout(self.lo_right)
         self.sc_right.setWidget(self.pn_right)
         # policy
-        policy_right = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        policy_right = QSizePolicy(
+            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred
+        )
         policy_right.setHorizontalStretch(2)
         self.sc_right.setSizePolicy(policy_right)
-        policy_left = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        policy_left = QSizePolicy(
+            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred
+        )
         policy_left.setHorizontalStretch(3)
         self.wg_img.setSizePolicy(policy_left)
         # assemble
@@ -225,17 +228,15 @@ class PnOutputer(QWidget):
         self.ck_evenV.setVisible(not isAuto)
 
     def auto_seg(self):
-        '''
-        '''
+        """ """
         self.gr_auto.setChecked(True)
         self.gr_fix.setChecked(False)
         self.collapse(isAuto=True)
-        val_grid = 1-(self.sl_grid.value()/10)
+        val_grid = 1 - (self.sl_grid.value() / 10)
         self.wg_img.auto_seg(coefGrid=val_grid)
 
     def fix_seg(self):
-        '''
-        '''
+        """ """
         self.gr_auto.setChecked(False)
         self.gr_fix.setChecked(True)
         self.collapse(isAuto=False)
@@ -247,51 +248,43 @@ class PnOutputer(QWidget):
         self.wg_img.task = index
 
     def change_grid(self):
-        '''
-        '''
+        """ """
         value = self.sl_grid.value()
-        self.gr_grid.setTitle("Grid Coef. = %.2f" % (value/10))
+        self.gr_grid.setTitle("Grid Coef. = %.2f" % (value / 10))
         self.auto_seg()
 
     def change_width(self):
-        '''
-        '''
+        """ """
         value = self.sl_width.value()
         self.gr_width.setTitle("Width = %d units" % (value))
         self.fix_seg()
 
     def change_length(self):
-        '''
-        '''
+        """ """
         value = self.sl_length.value()
         self.gr_length.setTitle("Length = %d units" % (value))
         self.fix_seg()
 
     def alignX(self):
-        '''
-        '''
+        """ """
         index = self.cb_alignX.currentIndex()
         self.wg_img.align(method=index, axis=1)
 
     def alignY(self):
-        '''
-        '''
+        """ """
         index = self.cb_alignY.currentIndex()
         self.wg_img.align(method=index, axis=0)
 
     def evenH(self):
-        '''
-        '''
+        """ """
         self.wg_img.distributed(axis=1, isEven=self.ck_evenH.isChecked())
 
     def evenV(self):
-        '''
-        '''
+        """ """
         self.wg_img.distributed(axis=0, isEven=self.ck_evenV.isChecked())
 
     def reset(self):
-        '''
-        '''
+        """ """
         self.sl_width.setValue(50)
         self.sl_length.setValue(50)
         self.cb_alignX.setCurrentIndex(0)
@@ -306,7 +299,9 @@ class PnOutputer(QWidget):
             self.rb_rgb.setChecked(True)
 
     def assign_PathOut(self):
-        path = QFileDialog().getExistingDirectory(self, "", "", QFileDialog.ShowDirsOnly)
+        path = QFileDialog().getExistingDirectory(
+            self, "", "", QFileDialog.ShowDirsOnly
+        )
         self.fd_output.setText(path)
 
     def paintEvent(self, paint_event):
@@ -329,14 +324,13 @@ class PnOutputer(QWidget):
 
 class Widget_Seg(Widget_Img):
     def __init__(self, grid):
-        '''
-        '''
+        """ """
         super().__init__()
         self.setMouseTracking(True)
         self.grid = grid
-        self.img_raw = grid.imgs.get('visSeg')
+        self.img_raw = grid.imgs.get("visSeg")
         self.task = 0  # 0 centroid, 1 zoom, 2 panV, 3 panH
-        '''attr'''
+        """attr"""
         # painter
         self.ratio = 0
         # mouse
@@ -345,8 +339,9 @@ class Widget_Seg(Widget_Img):
         # seg
         imgBin = self.grid.imgs.get("bin")
         imgBinTemp = imgBin.reshape(imgBin.shape[0], imgBin.shape[1], 1)
-        self.img_seg = np.multiply(self.grid.imgs.get("crop")[:, :, :3],
-                                   imgBinTemp).copy()
+        self.img_seg = np.multiply(
+            self.grid.imgs.get("crop")[:, :, :3], imgBinTemp
+        ).copy()
 
         # ui
         self.initUI()
@@ -375,10 +370,12 @@ class Widget_Seg(Widget_Img):
                 else:
                     self.ratio = self.height() / self.qimg.height()
 
-                rec_agent = QRect(int(rect.x() * self.ratio + self.rgX[0]),
-                                  int(rect.y() * self.ratio + self.rgY[0]),
-                                  int(rect.width() * self.ratio),
-                                  int(rect.height() * self.ratio))
+                rec_agent = QRect(
+                    int(rect.x() * self.ratio + self.rgX[0]),
+                    int(rect.y() * self.ratio + self.rgY[0]),
+                    int(rect.width() * self.ratio),
+                    int(rect.height() * self.ratio),
+                )
                 # if contain cursor
                 if rec_agent.contains(event.pos()):
                     self.agent_click = agent
@@ -417,8 +414,7 @@ class Widget_Seg(Widget_Img):
             self.setCursor(QCursor(Qt.SizeAllCursor))
         elif self.task == 1:
             # adjust borders
-            magnifying_glass(self, event.pos(), area=int(
-                self.width() / 7), zoom=1.5)
+            magnifying_glass(self, event.pos(), area=int(self.width() / 7), zoom=1.5)
         elif self.task == 2:
             self.setCursor(QCursor(Qt.SizeVerCursor))
         elif self.task == 3:
@@ -463,7 +459,7 @@ class Widget_Seg(Widget_Img):
     def paintEvent(self, paint_event):
         painter = QPainter(self)
         super().paintImage(painter)
-        pen = QPen()        
+        pen = QPen()
         pen.setWidth(3)
         pen.setColor(Qt.red)
         painter.setPen(pen)
@@ -475,22 +471,31 @@ class Widget_Seg(Widget_Img):
                     continue
                 rect = agent.getQRect()
                 pt_x, pt_y = agent.getCoordinate()
-                self.ratio = self.width()/self.qimg.width() if self.isFitWidth else self.height()/self.qimg.height()
-                rec_agent = QRect(int(rect.x()*self.ratio+self.rgX[0]),
-                                  int(rect.y()*self.ratio+self.rgY[0]),
-                                  int(rect.width()*self.ratio),
-                                  int(rect.height()*self.ratio))
-                drawCross(pt_x*self.ratio + self.rgX[0], 
-                          pt_y*self.ratio + self.rgY[0], painter)
+                self.ratio = (
+                    self.width() / self.qimg.width()
+                    if self.isFitWidth
+                    else self.height() / self.qimg.height()
+                )
+                rec_agent = QRect(
+                    int(rect.x() * self.ratio + self.rgX[0]),
+                    int(rect.y() * self.ratio + self.rgY[0]),
+                    int(rect.width() * self.ratio),
+                    int(rect.height() * self.ratio),
+                )
+                drawCross(
+                    pt_x * self.ratio + self.rgX[0],
+                    pt_y * self.ratio + self.rgY[0],
+                    painter,
+                )
                 painter.drawRect(rec_agent)
         painter.end()
 
     def switch_imgVis(self):
-        super().make_rgb_img(self.grid.imgs.get('crop'))
+        super().make_rgb_img(self.grid.imgs.get("crop"))
         self.repaint()
 
     def switch_imgSVis(self):
-        super().make_rgb_img(self.grid.imgs.get('visSeg'))
+        super().make_rgb_img(self.grid.imgs.get("visSeg"))
         self.repaint()
 
     def auto_seg(self, coefGrid=0):

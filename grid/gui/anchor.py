@@ -7,7 +7,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
 # self imports
-from .customQt import *
+from grid.gui.customQt import *
 
 class PnAnchor(QWidget):
     """

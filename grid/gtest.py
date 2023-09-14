@@ -30,7 +30,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import grid as gd
-from .gridGUI import *
+from grid.gridGUI import *
 import shapefile
 import numpy as np
 import pandas as pd
@@ -340,7 +340,7 @@ app.exec_()
 # import cv2
 # import matplotlib.pyplot as plt
 # import grid as gd
-# from .gridGUI import *
+# from grid.gridGUI import *
 # import shapefile
 # import numpy as np
 # import pandas as pd
@@ -370,7 +370,7 @@ app.exec_()
 # import cv2
 # import matplotlib.pyplot as plt
 # import grid as gd
-# from .gridGUI import *
+# from grid.gridGUI import *
 # import shapefile
 # import numpy as np
 # import pandas as pd
