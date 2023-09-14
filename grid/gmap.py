@@ -131,7 +131,7 @@ class GMap:
         self.dt = self.getDfCoordinate(self.angles, self.slps, self.itcs)
 
         # end progress bar
-        if self.subflag and "__main__.py" in sys.argv[0]:
+        if self.subflag:
             self.subflag = False
             QTimer.singleShot(self.window, lambda: setattr(self, "flag", True))
             QTimer.singleShot(self.window, lambda: setattr(self, "subflag", True))

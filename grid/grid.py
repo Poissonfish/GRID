@@ -105,8 +105,6 @@ class GRID:
         Parameters
         ----------
         """
-        if "__main__.py" not in sys.argv[0]:
-            app = QApplication(sys.argv)
 
         # check if the path is valid
         if path is None or not os.path.exists(path):
@@ -121,9 +119,6 @@ class GRID:
             print("Failed to create a new directory")
 
         self.savePlotAndDT(path=path_f, prefix=prefix, simple=simple)
-
-        if "__main__.py" not in sys.argv[0]:
-            app.quit()
 
         # params = {
         #     "k": self.imgs.paramKMs["k"],
@@ -220,7 +215,7 @@ class GRID:
         updateProgress(prog, name="Done", flag=self.subflag)
 
         # set progress bar inactive for 300ms
-        if self.subflag and "__main__.py" in sys.argv[0]:
+        if self.subflag:
             self.subflag = False
             QTimer.singleShot(self.window, lambda: setattr(self, "flag", True))
             QTimer.singleShot(self.window, lambda: setattr(self, "subflag", True))
