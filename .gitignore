@@ -22,6 +22,7 @@
 *.tidy
 *.spec
 *.dat
+*.pyc
 **/data/*
 docs/source/*
 env/*
@@ -29,5 +30,6 @@ env/*
 test/*
 
 build/*
+**/__pycache__/*
 
 publish.sh
