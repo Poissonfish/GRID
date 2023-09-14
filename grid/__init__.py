@@ -1,6 +1,6 @@
 __author__ = "Chun-Peng James Chen"
 __version__ = "1.2.25"
-__update__ = "Dec 9, 2022"
+__update__ = "Sep 14, 2023"
 
 # imports
 import subprocess
@@ -33,8 +33,8 @@ if "__main__" not in sys.argv[0]:
 
 # self update
 try:
-    url = 'https://pypi.python.org/pypi/photo_grid/json'
-    releases = json.loads(request.urlopen(url).read())['releases']
+    url = "https://pypi.python.org/pypi/photo_grid/json"
+    releases = json.loads(request.urlopen(url).read())["releases"]
     new_version = sorted(releases, key=parse_version, reverse=True)[0]
     if __version__ != new_version:
         # Dialog
@@ -45,16 +45,25 @@ try:
 
         while bol_ans is None:
             ans = input(
-                "A newer version of GRID (ver. %s) is now available, upgrade? (y/n) " % new_version)
+                "A newer version of GRID (ver. %s) is now available, upgrade? (y/n) "
+                % new_version
+            )
             if ans in possible_pos_ans:
                 bol_ans = True
             elif ans in possible_neg_ans:
                 bol_ans = False
 
         if bol_ans:
-            subprocess.check_call([sys.executable,
-                                   '-m', 'pip', 'install',
-                                   'photo_grid==%s' % new_version, '--upgrade'])
+            subprocess.check_call(
+                [
+                    sys.executable,
+                    "-m",
+                    "pip",
+                    "install",
+                    "photo_grid==%s" % new_version,
+                    "--upgrade",
+                ]
+            )
             print("\n")
             print("~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~*~~~~~~~~~")
             print("          Please re-launch GRID to finish the update")
