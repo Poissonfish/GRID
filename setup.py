@@ -45,4 +45,5 @@ setuptools.setup(
         # misc
         "tqdm",
     ],
+    entry_points={"console_scripts": ["GRID=grid.__init__:main"]},
 )

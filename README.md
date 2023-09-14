@@ -36,4 +36,8 @@ the `.whl` names and the commands should be:
 ```python -m pip install photo_grid```
 
 ### Launch GRID
+Just type `GRID` in your terminal.
+```GRID```
+
+or
 ```python -m grid```
