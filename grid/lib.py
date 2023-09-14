@@ -39,20 +39,22 @@ def doKMeans(img, k=3, features=[0]):
     ## select features
     img = img[:, :, features].copy()
     ## standardize
-    img_max, img_min = img.max(axis=(0, 1)), img.min(axis=(0, 1))-(1e-8)
-    img = (img-img_min)/(img_max-img_min)
+    img_max, img_min = img.max(axis=(0, 1)), img.min(axis=(0, 1)) - (1e-8)
+    img = (img - img_min) / (img_max - img_min)
     ## convert to float32
     img_z = img.reshape((-1, img.shape[2])).astype(np.float32)
 
     # define criteria, number of clusters(K) and apply kmeans()
     criteria = (cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
-    param_k = dict(data=img_z,
-                   K=k,
-                   bestLabels=None,
-                   criteria=criteria,
-                   attempts=10,
-                   #    flags=cv2.KMEANS_RANDOM_CENTERS)
-                   flags=cv2.KMEANS_PP_CENTERS)
+    param_k = dict(
+        data=img_z,
+        K=k,
+        bestLabels=None,
+        criteria=criteria,
+        attempts=10,
+        #    flags=cv2.KMEANS_RANDOM_CENTERS)
+        flags=cv2.KMEANS_PP_CENTERS,
+    )
 
     # KMEANS_RANDOM_CENTERS
     cv2.setRNGSeed(99163)
@@ -77,13 +79,10 @@ def smoothImg(image, n):
     ----------
     """
 
-    kernel = np.array((
-        [1, 4, 1],
-        [4, 9, 4],
-        [1, 4, 1]), dtype='int') / 29
+    kernel = np.array(([1, 4, 1], [4, 9, 4], [1, 4, 1]), dtype="int") / 29
 
     for _ in range(n):
-        image = convolve2d(image, kernel, mode='same')
+        image = convolve2d(image, kernel, mode="same")
 
     return image
 
@@ -98,7 +97,7 @@ def binarizeSmImg(image, cutoff=0.5):
     imgOut[image > cutoff] = 1
     imgOut[image <= cutoff] = 0
 
-    return imgOut.astype(np.int)
+    return imgOut.astype(int)
 
 
 def find_angle(v1, v2):
@@ -148,8 +147,8 @@ def cropImg(img, pts, resize=2048):
     pt_NW, pt_NE, pt_SE, pt_SW = sortPts(pts)
 
     # estimate output dimension
-    img_W = (euclidean(pt_NW, pt_NE) + euclidean(pt_SE, pt_SW))/2
-    img_H = (euclidean(pt_SE, pt_NE) + euclidean(pt_SW, pt_NW))/2
+    img_W = (euclidean(pt_NW, pt_NE) + euclidean(pt_SE, pt_SW)) / 2
+    img_H = (euclidean(pt_SE, pt_NE) + euclidean(pt_SW, pt_NW)) / 2
 
     # resize output dimension
     shape = find_small_shape((img_W, img_H), limits=resize)
@@ -157,7 +156,8 @@ def cropImg(img, pts, resize=2048):
     # generate target point
     pts2 = np.float32(
         # NW,    NE,            SE,                   SW
-        [[0, 0], [shape[0], 0], [shape[0], shape[1]], [0, shape[1]]])
+        [[0, 0], [shape[0], 0], [shape[0], shape[1]], [0, shape[1]]]
+    )
 
     # transformation
     H = cv2.getPerspectiveTransform(pts, pts2)
@@ -187,10 +187,16 @@ def rotatePts(pts, angle, org=(0, 0)):
     ox, oy = org
     ptx = np.array([pts[i, 0] for i in range(len(pts))])
     pty = np.array([pts[i, 1] for i in range(len(pts))])
-    qx = ox + math.cos(math.radians(angle))*(ptx - ox) - \
-        math.sin(math.radians(angle))*(pty - oy)
-    qy = oy + math.sin(math.radians(angle))*(ptx - ox) + \
-        math.cos(math.radians(angle))*(pty - oy)
+    qx = (
+        ox
+        + math.cos(math.radians(angle)) * (ptx - ox)
+        - math.sin(math.radians(angle)) * (pty - oy)
+    )
+    qy = (
+        oy
+        + math.sin(math.radians(angle)) * (ptx - ox)
+        + math.cos(math.radians(angle)) * (pty - oy)
+    )
     qpts = [[qx[i], qy[i]] for i in range(len(pts))]
     return np.array(qpts)
 
@@ -216,6 +222,7 @@ def rotatePts(pts, angle, org=(0, 0)):
 
 # === === === === === GRID pickle === === === === ===
 
+
 def pickleGRID(obj, path):
     with open(path, "wb") as file:
         pickle.dump(obj, file, pickle.HIGHEST_PROTOCOL)
@@ -226,6 +233,7 @@ def getPickledGRID(path):
         obj = pickle.load(file)
 
     return obj
+
 
 # === === === === === rank === === === === ===
 
@@ -238,7 +246,7 @@ def getRank(array):
     [1,3,6,2,4] -> [4,2,0,3,1]
     """
     sort = np.array(array).argsort()
-    rank = np.zeros(len(sort), dtype=np.int)
+    rank = np.zeros(len(sort), dtype=int)
     rank[sort] = np.flip(np.arange(len(array)), axis=0)
     return rank
 
@@ -263,19 +271,20 @@ def rotateNdArray(img, angle):
 
         # padding
         sizePad = max(imgTemp.shape)
-        imgP = np.pad(imgTemp, [sizePad, sizePad], 'constant')
+        imgP = np.pad(imgTemp, [sizePad, sizePad], "constant")
 
         # rotate
-        pivot = (np.array(imgP.shape[:2])/2).astype(np.int).tolist()
+        pivot = (np.array(imgP.shape[:2]) / 2).astype(int).tolist()
         print("testse")
         matRot = cv2.getRotationMatrix2D(pivot, -angle, 1.0)
         imgR = cv2.warpAffine(
-            imgP.astype(np.float32), matRot, imgP.shape, flags=cv2.INTER_LINEAR).astype(np.uint8)
+            imgP.astype(np.float32), matRot, imgP.shape, flags=cv2.INTER_LINEAR
+        ).astype(np.uint8)
 
         # crop
         sigX = np.where(imgR.sum(axis=0) != 0)[0]
         sigY = np.where(imgR.sum(axis=1) != 0)[0]
-        imgC = imgR[sigY[0]:sigY[-1], sigX[0]:sigX[-1]]
+        imgC = imgR[sigY[0] : sigY[-1], sigX[0] : sigX[-1]]
 
         # store output img
         list_img.append(imgC)
@@ -296,7 +305,7 @@ def rotateBinNdArray(img, angle):
 
     # padding
     sizePad = max(img.shape)
-    imgP = np.pad(img, [sizePad, sizePad], 'constant').astype(np.float32)
+    imgP = np.pad(img, [sizePad, sizePad], "constant").astype(np.float32)
 
     # rotate
     # check OpenCV version (4.5.2+ handle input format differently)
@@ -304,18 +313,19 @@ def rotateBinNdArray(img, angle):
     ver_cv_num = int(ver_cv.replace(".", "")[:3])
     is_old_cv = ver_cv_num < 452
     if is_old_cv:
-        pivot = tuple((np.array(imgP.shape[:2])/2).astype(np.int))
+        pivot = tuple((np.array(imgP.shape[:2]) / 2).astype(int))
     else:
-        pivot = (np.array(imgP.shape[:2])/2).astype(np.int).tolist()
+        pivot = (np.array(imgP.shape[:2]) / 2).astype(int).tolist()
     # rotate images
     matRot = cv2.getRotationMatrix2D(pivot, -angle, 1.0)
-    imgR = cv2.warpAffine(imgP, matRot, imgP.shape,
-                          flags=cv2.INTER_LINEAR).astype(np.uint8)
+    imgR = cv2.warpAffine(imgP, matRot, imgP.shape, flags=cv2.INTER_LINEAR).astype(
+        np.uint8
+    )
 
     # crop
     sigX = np.where(imgR.sum(axis=0) != 0)[0]
     sigY = np.where(imgR.sum(axis=1) != 0)[0]
-    imgC = imgR[sigY[0]:sigY[-1], sigX[0]:sigX[-1]]
+    imgC = imgR[sigY[0] : sigY[-1], sigX[0] : sigX[-1]]
 
     # return
     return imgC
@@ -370,16 +380,15 @@ def recover_scale(mat_in, mat_H):
     mat_recover = mat_recover.transpose()
 
     # extract the first 2 elements in each point (4 x 2)
-    mat_recover = [mat_recover[i, :2] / mat_recover[i, 2]
-                   for i in range(n_points)]
+    mat_recover = [mat_recover[i, :2] / mat_recover[i, 2] for i in range(n_points)]
 
     # return
     return np.array(np.matrix(mat_recover)).tolist()
 
 
 def getFourierTransform(sig):
-    sigf = abs(np.fft.fft(sig)/len(sig))
-    return sigf[2:int(len(sigf)/2)]
+    sigf = abs(np.fft.fft(sig) / len(sig))
+    return sigf[2 : int(len(sigf) / 2)]
     # return sigf[2:25]
 
 
@@ -426,11 +435,11 @@ def getLineABC(slope, intercept):
 def solveLines(slope1, intercept1, slope2, intercept2):
     A1, B1, C1 = getLineABC(slope1, intercept1)
     A2, B2, C2 = getLineABC(slope2, intercept2)
-    D = A1*B2-A2*B1
-    Dx = C1*B2-B1*C2
-    Dy = A1*C2-C1*A2
+    D = A1 * B2 - A2 * B1
+    Dx = C1 * B2 - B1 * C2
+    Dy = A1 * C2 - C1 * A2
     if D != 0:
-        x, y = Dx/D, Dy/D
+        x, y = Dx / D, Dy / D
         return int(x), int(y)
     else:
         return False, False
@@ -444,16 +453,15 @@ def findPeaks(img, nPeaks=0, axis=1, nSmooth=100):
     """
 
     # compute 1-D signal
-    signal = img.mean(axis=(not axis)*1)  # 0:nrow
+    signal = img.mean(axis=(not axis) * 1)  # 0:nrow
 
     # ignore signals from iamge frame
     signal[:2] = [0, 0]
     signal[-2:] = [0, 0]
 
     # gaussian smooth
-    for _ in range(int(len(signal)/30)):
-        signal = np.convolve(
-            np.array([1, 2, 4, 2, 1])/10, signal, mode='same')
+    for _ in range(int(len(signal) / 30)):
+        signal = np.convolve(np.array([1, 2, 4, 2, 1]) / 10, signal, mode="same")
 
     # find primary peaks
     peaks, _ = find_peaks(signal)
@@ -464,22 +472,25 @@ def findPeaks(img, nPeaks=0, axis=1, nSmooth=100):
     stdDiff = np.array(lsDiff).std()
 
     # get finalized peaks with distance constrain
-    coef = 0.18/(stdDiff/medDiff)  # empirical
-    peaks, _ = find_peaks(signal, distance=medDiff-stdDiff*coef)
+    coef = 0.18 / (stdDiff / medDiff)  # empirical
+    peaks, _ = find_peaks(signal, distance=medDiff - stdDiff * coef)
     # , prominence=(0.01, None))
     if nPeaks != 0:
         if len(peaks) > nPeaks:
             while len(peaks) > nPeaks:
                 ls_diff = np.diff(peaks)
                 idx_diff = np.argmin(ls_diff)
-                idx_kick = idx_diff if (
-                    signal[peaks[idx_diff]] < signal[peaks[idx_diff+1]]) else (idx_diff+1)
+                idx_kick = (
+                    idx_diff
+                    if (signal[peaks[idx_diff]] < signal[peaks[idx_diff + 1]])
+                    else (idx_diff + 1)
+                )
                 peaks = np.delete(peaks, idx_kick)
         elif len(peaks) < nPeaks:
             while len(peaks) < nPeaks:
                 ls_diff = np.diff(peaks)
                 idx_diff = np.argmax(ls_diff)
-                peak_insert = (peaks[idx_diff]+peaks[idx_diff+1])/2
+                peak_insert = (peaks[idx_diff] + peaks[idx_diff + 1]) / 2
                 peaks = np.sort(np.append(peaks, int(peak_insert)))
 
     return peaks, signal
@@ -487,21 +498,22 @@ def findPeaks(img, nPeaks=0, axis=1, nSmooth=100):
 
 # === === === === Plotting === === === === ===
 
+
 def qCross(x, y, painter, size=2):
-    l1_st_x, l1_st_y = x-size, y-size
-    l1_ed_x, l1_ed_y = x+size, y+size
-    l2_st_x, l2_st_y = x-size, y+size
-    l2_ed_x, l2_ed_y = x+size, y-size
+    l1_st_x, l1_st_y = x - size, y - size
+    l1_ed_x, l1_ed_y = x + size, y + size
+    l2_st_x, l2_st_y = x - size, y + size
+    l2_ed_x, l2_ed_y = x + size, y - size
     painter.drawLine(int(l1_st_x), int(l1_st_y), int(l1_ed_x), int(l1_ed_y))
     painter.drawLine(int(l2_st_x), int(l2_st_y), int(l2_ed_x), int(l2_ed_y))
 
 
 def pltCross(x, y, size=3, width=1, color="red"):
-    pt1X = [x-size, x+size]
-    pt1Y = [y-size, y+size]
+    pt1X = [x - size, x + size]
+    pt1Y = [y - size, y + size]
     line1 = Line2D(pt1X, pt1Y, linewidth=width, color=color)
-    pt2X = [x-size, x+size]
-    pt2Y = [y+size, y-size]
+    pt2X = [x - size, x + size]
+    pt2Y = [y + size, y - size]
     line2 = Line2D(pt2X, pt2Y, linewidth=width, color=color)
     return line1, line2
 
@@ -512,18 +524,27 @@ def pltImShow(img, path=None, prefix="GRID", filename=".png"):
         ax.imshow(img)
         plt.show()
     else:
-        file = os.path.join(path, prefix+filename)
+        file = os.path.join(path, prefix + filename)
         if img.max() == 1:
             qimg = getBinQImg(img)
         elif img.max() < 100:
-            qimg = getIdx8QImg(img, img.max()+1)
+            qimg = getIdx8QImg(img, img.max() + 1)
         else:
             qimg = getRGBQImg(img)
 
         qimg.save(file, "PNG")
 
 
-def pltSegPlot(agents, plotBase, isName=False, isRect=False, isCenter=False, path=None, prefix="GRID", filename=".png"):
+def pltSegPlot(
+    agents,
+    plotBase,
+    isName=False,
+    isRect=False,
+    isCenter=False,
+    path=None,
+    prefix="GRID",
+    filename=".png",
+):
     if path is None:
         # CLI
         ax = plt.subplot(111)
@@ -540,19 +561,24 @@ def pltSegPlot(agents, plotBase, isName=False, isRect=False, isCenter=False, pat
                     ax.add_line(line2)
                     if isRect:
                         rect = patches.Rectangle(
-                            (recAg.x(), recAg.y()), recAg.width(), recAg.height(),
-                            linewidth=1, edgecolor='r', facecolor='none')
+                            (recAg.x(), recAg.y()),
+                            recAg.width(),
+                            recAg.height(),
+                            linewidth=1,
+                            edgecolor="r",
+                            facecolor="none",
+                        )
                         ax.add_patch(rect)
                 except Exception:
                     print("The plot is out of the borders")
         plt.show()
     else:
         # GUI
-        file = os.path.join(path, prefix+filename)
+        file = os.path.join(path, prefix + filename)
         if plotBase.max() == 1:
             qimg = getBinQImg(plotBase)
         elif plotBase.max() < 10:
-            qimg = getIdx8QImg(plotBase, plotBase.max()+1)
+            qimg = getIdx8QImg(plotBase, plotBase.max() + 1)
         else:
             qimg = getRGBQImg(plotBase)
 
@@ -569,7 +595,7 @@ def pltSegPlot(agents, plotBase, isName=False, isRect=False, isCenter=False, pat
                     center = agent.getCoordinate()
                     rect = agent.getQRect()
                     if isName:
-                        text = "%s\n(%d, %d)" % (agent.name, row+1, col+1)
+                        text = "%s\n(%d, %d)" % (agent.name, row + 1, col + 1)
                         painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, text)
                     if isRect:
                         painter.drawRect(rect)
@@ -588,7 +614,7 @@ def pltImShowMulti(imgs, titles=None, vertical=False):
 
     plt.figure()
     for i in range(nImgs):
-        idxPlot = idxImg*round(nImgs/2) + idxLyt + (i+1)
+        idxPlot = idxImg * round(nImgs / 2) + idxLyt + (i + 1)
         plt.subplot(idxPlot)
         plt.imshow(imgs[i])
         try:
@@ -618,7 +644,7 @@ def pltLinesPlot(gmap, agents, img):
 
 
 def plotLine(axes, slope, intercept):
-    if abs(slope) > 1e+9:
+    if abs(slope) > 1e9:
         # vertical line
         y_vals = np.array(axes.get_ylim())
         x_vals = np.repeat(intercept, len(y_vals))
@@ -626,7 +652,7 @@ def plotLine(axes, slope, intercept):
         # usual line
         x_vals = np.array(axes.get_xlim())
         y_vals = intercept + slope * x_vals
-    axes.plot(x_vals, y_vals, '--', color="red")
+    axes.plot(x_vals, y_vals, "--", color="red")
 
 
 def bugmsg(msg, title="DEBUG"):
@@ -638,32 +664,32 @@ def bugmsg(msg, title="DEBUG"):
 # for GUI
 def getRGBQImg(img):
     h, w = img.shape[0], img.shape[1]
-    qImg = QImage(img.astype(np.uint8).copy(), w, h, w*3, QImage.Format_RGB888)
+    qImg = QImage(img.astype(np.uint8).copy(), w, h, w * 3, QImage.Format_RGB888)
     return QPixmap(qImg)
 
 
 def getBinQImg(img):
     h, w = img.shape[0], img.shape[1]
-    qImg = QImage(img.astype(np.uint8).copy(), w,
-                  h, w*1, QImage.Format_Indexed8)
+    qImg = QImage(img.astype(np.uint8).copy(), w, h, w * 1, QImage.Format_Indexed8)
     qImg.setColor(0, qRgb(0, 0, 0))
     qImg.setColor(1, qRgb(241, 225, 29))
     return QPixmap(qImg)
 
 
 def getIdx8QImg(img, k):
-    colormap = [qRgb(228, 26, 28),
-                qRgb(55, 126, 184),
-                qRgb(77, 175, 74),
-                qRgb(152, 78, 163),
-                qRgb(255, 127, 0),
-                qRgb(255, 255, 51),
-                qRgb(166, 86, 40),
-                qRgb(247, 129, 191),
-                qRgb(153, 153, 153)]
+    colormap = [
+        qRgb(228, 26, 28),
+        qRgb(55, 126, 184),
+        qRgb(77, 175, 74),
+        qRgb(152, 78, 163),
+        qRgb(255, 127, 0),
+        qRgb(255, 255, 51),
+        qRgb(166, 86, 40),
+        qRgb(247, 129, 191),
+        qRgb(153, 153, 153),
+    ]
     h, w = img.shape[0], img.shape[1]
-    qImg = QImage(img.astype(np.uint8).copy(), w,
-                  h, w*1, QImage.Format_Indexed8)
+    qImg = QImage(img.astype(np.uint8).copy(), w, h, w * 1, QImage.Format_Indexed8)
     for i in range(k):
         qImg.setColor(i, colormap[i])
     return QPixmap(qImg)
@@ -671,8 +697,7 @@ def getIdx8QImg(img, k):
 
 def getGrayQImg(img):
     h, w = img.shape[0], img.shape[1]
-    qImg = QImage(img.astype(np.uint8).copy(), w,
-                  h, w*1, QImage.Format_Grayscale8)
+    qImg = QImage(img.astype(np.uint8).copy(), w, h, w * 1, QImage.Format_Grayscale8)
     return QPixmap(qImg)
 
 
@@ -681,8 +706,8 @@ class GProg(QWidget):
     def __init__(self, size, name, widget):
         super().__init__()
         try:
-            self._width = widget.width()/5
-            self._height = self._width/16*5
+            self._width = widget.width() / 5
+            self._height = self._width / 16 * 5
             wgW, wgH = widget.width(), widget.height()
             self._pos = widget.pos()
         except Exception:
@@ -700,15 +725,17 @@ class GProg(QWidget):
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.bar)
         self.setLayout(self.layout)
-        self.move(int(self._pos.x()+(wgW-self._width)/2),
-                  int(self._pos.y()+(wgH-self._height)/2))
+        self.move(
+            int(self._pos.x() + (wgW - self._width) / 2),
+            int(self._pos.y() + (wgH - self._height) / 2),
+        )
         self.resize(int(self._width), int(self._height))
         self.show()
         self.repaint()
         QApplication.processEvents()
 
     def inc(self, n, name=None):
-        self.bar.setValue(self.bar.value()+n)
+        self.bar.setValue(self.bar.value() + n)
         if name is not None:
             self.label.setText(name)
         self.repaint()

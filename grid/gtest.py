@@ -1,4 +1,3 @@
-
 # === === === === === run main === === === === ===
 # basic imports
 import sys
@@ -45,7 +44,8 @@ grid = gd.GRID()
 
 grid.loadData(
     pathImg="/Users/poissonfish/Dropbox/photo_grid/test/map_match/demo.jpg",
-    pathMap="/Users/poissonfish/Dropbox/photo_grid/test/map_match/demo.csv")
+    pathMap="/Users/poissonfish/Dropbox/photo_grid/test/map_match/demo.csv",
+)
 # grid.binarizeImg(k=3, lsSelect=[0, 1], valShad=0, valSmth=0)
 # grid.findPlots(nRow=4, nCol=3)
 
@@ -107,7 +107,7 @@ app.exec_()
 # # transformation
 # H = cv2.getPerspectiveTransform(pts, pts2)
 # # dst = cv2.warpPerspective(img, H, shape)
-# dst = cv2.warpPerspective(np.zeros((100000, 30), dtype=np.int), H, shape)
+# dst = cv2.warpPerspective(np.zeros((100000, 30), dtype=int), H, shape)
 # dst = np.array(dst).astype(np.uint8)
 
 # plt.imshow(img)
@@ -691,7 +691,7 @@ app.exec_()
 #     imgP = np.pad(img, [sizePad, sizePad], 'constant')
 
 #     # rotate
-#     pivot = tuple((np.array(imgP.shape[:2])/2).astype(np.int))
+#     pivot = tuple((np.array(imgP.shape[:2])/2).astype(int))
 #     matRot = cv2.getRotationMatrix2D(pivot, angel, 1.0)
 #     imgR = cv2.warpAffine(
 #         imgP.astype(np.float32), matRot, imgP.shape, flags=cv2.INTER_LINEAR).astype(np.int8)
@@ -825,7 +825,7 @@ app.exec_()
 # lsK = grid.imgs.paramKMs["lsSelect"]
 
 # # grab info from GRID obj
-# img = grid.imgs.get("crop").copy().astype(np.int)
+# img = grid.imgs.get("crop").copy().astype(int)
 # ch1Sub = 1 if img.shape[2] == 3 else 3  # replace NIR with Gr if it's RGB
 
 
@@ -861,7 +861,7 @@ app.exec_()
 # grid.binarizeImg(k=k, lsSelect=[0], valShad=0, valSmth=0, outplot=False)
 
 # for i in range(row):
-#     imgB = (np.isin(grid.imgs.get('kmean'), i)*1).astype(np.int)
+#     imgB = (np.isin(grid.imgs.get('kmean'), i)*1).astype(int)
 #     sigs = imgB.mean(axis=0)
 #     plt.subplot(row, col, 1+i*col+0)
 #     plt.imshow(imgB)
@@ -916,7 +916,7 @@ app.exec_()
 
 # def getRank(array):
 #     sort = array.argsort()
-#     rank = np.zeros(len(sort), dtype=np.int)
+#     rank = np.zeros(len(sort), dtype=int)
 #     rank[sort] = np.flip(np.arange(len(array)), axis=0)
 #     return rank
 

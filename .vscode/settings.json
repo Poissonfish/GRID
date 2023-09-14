@@ -1,9 +1,8 @@
 {
-    "python.pythonPath": "/usr/local/bin/python3",
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
-    "workbench.colorTheme": "Julia (Monokai Vibrant)",
+    "workbench.colorTheme": "Monokai Pro",
     "jupyter.jupyterServerType": "local",
     "jupyter.jupyterCommandLineArguments": []
 }

@@ -14,7 +14,14 @@ import shapefile
 import cv2
 
 # self import
-from .lib import find_small_shape, initProgress, updateProgress, pltImShow, pltSegPlot, recover_scale
+from .lib import (
+    find_small_shape,
+    initProgress,
+    updateProgress,
+    pltImShow,
+    pltSegPlot,
+    recover_scale,
+)
 from .dir import Dir
 
 
@@ -59,16 +66,16 @@ def loadImg(path):
         npImg = np.zeros((rasObj.height, rasObj.width, 3), dtype="uint8")
         for i in range(3):
             npImg[:, :, i] = getBandUint8(rasObj.read(1), ls_dtype[1])
-            if i != nCh-1:
-                updateProgress(prog, name="Loading channel %d" % (i+2))
+            if i != nCh - 1:
+                updateProgress(prog, name="Loading channel %d" % (i + 2))
             else:
                 updateProgress(prog, name="Done")
     else:
         npImg = np.zeros((rasObj.height, rasObj.width, nCh), dtype="uint8")
         for i in range(nCh):
             npImg[:, :, i] = getBandUint8(rasObj.read(i + 1), ls_dtype[i])
-            if i != nCh-1:
-                updateProgress(prog, name="Loading channel %d" % (i+2))
+            if i != nCh - 1:
+                updateProgress(prog, name="Loading channel %d" % (i + 2))
             else:
                 updateProgress(prog, name="Done")
 
@@ -96,8 +103,7 @@ def loadImg(path):
 def getBandUint8(band, dtype):
     if "float" in dtype:
         band[band < 0] = 0
-        band_int8 = (band - band.min()) * 255 / \
-                    (np.quantile(band, .999) - band.min())
+        band_int8 = (band - band.min()) * 255 / (np.quantile(band, 0.999) - band.min())
         band_int8[band_int8 > 255] = 255
         return band_int8
     else:
@@ -119,7 +125,7 @@ def loadImgWeb(URL):
 
     """
 
-    with urlopen(URL)as url:
+    with urlopen(URL) as url:
         file = io.BytesIO(url.read())
         npImg = np.array(Image.open(file), dtype="uint8")
 
@@ -174,36 +180,37 @@ def saveQImg(qimg, path):
 def saveDT(grid, path, prefix="GRID", simple=True):
     # save npy
     if not simple:
-        np.save(os.path.join(path, prefix+"_image.npy"), grid.imgs.get("crop"))
+        np.save(os.path.join(path, prefix + "_image.npy"), grid.imgs.get("crop"))
 
     # get path
-    pathDT = os.path.join(path, prefix+"_data.csv")
+    pathDT = os.path.join(path, prefix + "_data.csv")
 
     # progress bar
     nD = grid.imgs.depth
     lsK = grid.imgs.paramKMs["lsSelect"]
 
     # grab info from GRID obj
-    img = grid.imgs.get("crop").copy().astype(np.int)
+    img = grid.imgs.get("crop").copy().astype(int)
     ch1Sub = 1 if img.shape[2] == 3 else 3  # replace NIR with Gr if it's RGB
 
     # intialize dataframe
-    df = pd.DataFrame(columns=['var', 'row', 'col',
-                               'area_all', 'area_veg'])
+    df = pd.DataFrame(columns=["var", "row", "col", "area_all", "area_veg"])
 
     # calculate index imgs
-    dicIdx = dict({
-        "NDVI": (img[:, :, ch1Sub] - img[:, :, 0]) /
-                (img[:, :, ch1Sub] + img[:, :, 0] + 1e-8),
-        "GNDVI": (img[:, :, ch1Sub] - img[:, :, 1]) /
-                (img[:, :, ch1Sub] + img[:, :, 1] + 1e-8),
-        "CNDVI": (2 * img[:, :, ch1Sub] - img[:, :, 0] - img[:, :, 1]) /
-                (img[:, :, ch1Sub] + img[:, :, 0] + img[:, :, 1] + 1e-8),
-        "RVI": img[:, :, ch1Sub] / (img[:, :, 0] + 1e-8),
-        "GRVI": img[:, :, ch1Sub] / (img[:, :, 1] + 1e-8),
-        "NDGI": (img[:, :, 1] - img[:, :, 0]) /
-                (img[:, :, 1] + img[:, :, 0] + 1e-8)
-    })
+    dicIdx = dict(
+        {
+            "NDVI": (img[:, :, ch1Sub] - img[:, :, 0])
+            / (img[:, :, ch1Sub] + img[:, :, 0] + 1e-8),
+            "GNDVI": (img[:, :, ch1Sub] - img[:, :, 1])
+            / (img[:, :, ch1Sub] + img[:, :, 1] + 1e-8),
+            "CNDVI": (2 * img[:, :, ch1Sub] - img[:, :, 0] - img[:, :, 1])
+            / (img[:, :, ch1Sub] + img[:, :, 0] + img[:, :, 1] + 1e-8),
+            "RVI": img[:, :, ch1Sub] / (img[:, :, 0] + 1e-8),
+            "GRVI": img[:, :, ch1Sub] / (img[:, :, 1] + 1e-8),
+            "NDGI": (img[:, :, 1] - img[:, :, 0])
+            / (img[:, :, 1] + img[:, :, 0] + 1e-8),
+        }
+    )
 
     # channel values
     for i in range(nD):
@@ -229,19 +236,17 @@ def saveDT(grid, path, prefix="GRID", simple=True):
             if not agent or agent.isFake():
                 continue
             try:
-                entry = dict(var=str(agent.name),
-                             row=int(row + 1),
-                             col=int(col + 1))
+                entry = dict(var=str(agent.name), row=int(row + 1), col=int(col + 1))
 
                 # compute valid ranges
-                rg_row, rg_col = get_valid_range(agent, grid.imgs.get('bin'))
+                rg_row, rg_col = get_valid_range(agent, grid.imgs.get("bin"))
 
                 # get selected pixels info
-                imgBinAgent = grid.imgs.get('bin')[rg_row, :][:, rg_col]
+                imgBinAgent = grid.imgs.get("bin")[rg_row, :][:, rg_col]
                 n_veg = imgBinAgent.sum()
 
                 # load area info
-                entry["area_all"] = len(rg_row)*len(rg_col)
+                entry["area_all"] = len(rg_row) * len(rg_col)
                 entry["area_veg"] = n_veg
 
                 # append temp entry
@@ -259,7 +264,7 @@ def saveDT(grid, path, prefix="GRID", simple=True):
                 print(e)
                 print("The plot is out of the borders")
 
-    df = df[~df['var'].isnull()]
+    df = df[~df["var"].isnull()]
 
     # export
     df.to_csv(pathDT, index=False)
@@ -267,82 +272,168 @@ def saveDT(grid, path, prefix="GRID", simple=True):
 
 def savePlot(grid, path, prefix="GRID", simple=True):
     # raw-none
-    pltSegPlot(grid.agents, grid.imgs.get("crop")[:, :, :3],
-               path=path, prefix=prefix, filename="_raw.png")
+    pltSegPlot(
+        grid.agents,
+        grid.imgs.get("crop")[:, :, :3],
+        path=path,
+        prefix=prefix,
+        filename="_raw.png",
+    )
     if not simple:
         # raw-center
-        pltSegPlot(grid.agents, grid.imgs.get("crop")[:, :, :3],
-                   isCenter=True,
-                   path=path, prefix=prefix, filename="_raw_centroid.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("crop")[:, :, :3],
+            isCenter=True,
+            path=path,
+            prefix=prefix,
+            filename="_raw_centroid.png",
+        )
         # raw-frame
-        pltSegPlot(grid.agents, grid.imgs.get("crop")[:, :, :3],
-                   isRect=True,
-                   path=path, prefix=prefix, filename="_raw_border.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("crop")[:, :, :3],
+            isRect=True,
+            path=path,
+            prefix=prefix,
+            filename="_raw_border.png",
+        )
         # raw-both
-        pltSegPlot(grid.agents, grid.imgs.get("crop")[:, :, :3],
-                   isCenter=True, isRect=True,
-                   path=path, prefix=prefix, filename="_raw_both.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("crop")[:, :, :3],
+            isCenter=True,
+            isRect=True,
+            path=path,
+            prefix=prefix,
+            filename="_raw_both.png",
+        )
 
     # cluster-none
-    pltSegPlot(grid.agents, grid.imgs.get("kmean"),
-               path=path, prefix=prefix, filename="_kmeans.png")
+    pltSegPlot(
+        grid.agents,
+        grid.imgs.get("kmean"),
+        path=path,
+        prefix=prefix,
+        filename="_kmeans.png",
+    )
     if not simple:
         # cluster-center
-        pltSegPlot(grid.agents, grid.imgs.get("kmean"),
-                   isCenter=True,
-                   path=path, prefix=prefix, filename="_kmeans_centroid.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("kmean"),
+            isCenter=True,
+            path=path,
+            prefix=prefix,
+            filename="_kmeans_centroid.png",
+        )
         # cluster-frame
-        pltSegPlot(grid.agents, grid.imgs.get("kmean"),
-                   isRect=True,
-                   path=path, prefix=prefix, filename="_kmeans_border.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("kmean"),
+            isRect=True,
+            path=path,
+            prefix=prefix,
+            filename="_kmeans_border.png",
+        )
         # cluster-both
-        pltSegPlot(grid.agents, grid.imgs.get("kmean"),
-                   isCenter=True, isRect=True,
-                   path=path, prefix=prefix, filename="_kmeans_both.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("kmean"),
+            isCenter=True,
+            isRect=True,
+            path=path,
+            prefix=prefix,
+            filename="_kmeans_both.png",
+        )
 
     # binary-none
-    pltSegPlot(grid.agents, grid.imgs.get("bin"),
-               path=path, prefix=prefix, filename="_bin.png")
+    pltSegPlot(
+        grid.agents, grid.imgs.get("bin"), path=path, prefix=prefix, filename="_bin.png"
+    )
     if not simple:
         # binary-center
-        pltSegPlot(grid.agents, grid.imgs.get("bin"),
-                   isCenter=True,
-                   path=path, prefix=prefix, filename="_bin_centroid.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("bin"),
+            isCenter=True,
+            path=path,
+            prefix=prefix,
+            filename="_bin_centroid.png",
+        )
         # binary-frame
-        pltSegPlot(grid.agents, grid.imgs.get("bin"),
-                   isRect=True,
-                   path=path, prefix=prefix, filename="_bin_border.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("bin"),
+            isRect=True,
+            path=path,
+            prefix=prefix,
+            filename="_bin_border.png",
+        )
         # binary-both
-        pltSegPlot(grid.agents, grid.imgs.get("bin"),
-                   isCenter=True, isRect=True,
-                   path=path, prefix=prefix, filename="_bin_both.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("bin"),
+            isCenter=True,
+            isRect=True,
+            path=path,
+            prefix=prefix,
+            filename="_bin_both.png",
+        )
 
     if not simple:
         # extraction-none
-        pltSegPlot(grid.agents, grid.imgs.get("visSeg"),
-                   path=path, prefix=prefix, filename="_seg.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("visSeg"),
+            path=path,
+            prefix=prefix,
+            filename="_seg.png",
+        )
         # extraction-center
-        pltSegPlot(grid.agents, grid.imgs.get("visSeg"),
-                   isCenter=True,
-                   path=path, prefix=prefix, filename="_seg_centroid.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("visSeg"),
+            isCenter=True,
+            path=path,
+            prefix=prefix,
+            filename="_seg_centroid.png",
+        )
         # extraction-frame
-        pltSegPlot(grid.agents, grid.imgs.get("visSeg"),
-                   isCenter=True, isRect=True,
-                   path=path, prefix=prefix, filename="_seg_both.png")
+        pltSegPlot(
+            grid.agents,
+            grid.imgs.get("visSeg"),
+            isCenter=True,
+            isRect=True,
+            path=path,
+            prefix=prefix,
+            filename="_seg_both.png",
+        )
 
     # extraction-frame
-    pltSegPlot(grid.agents, grid.imgs.get("visSeg"),
-               isRect=True,
-               path=path, prefix=prefix, filename="_seg_border.png")
+    pltSegPlot(
+        grid.agents,
+        grid.imgs.get("visSeg"),
+        isRect=True,
+        path=path,
+        prefix=prefix,
+        filename="_seg_border.png",
+    )
     # extraction-ID
-    pltSegPlot(grid.agents, grid.imgs.get("visSeg"),
-               isName=True, isRect=True,
-               path=path, prefix=prefix, filename="_seg_ID.png")
+    pltSegPlot(
+        grid.agents,
+        grid.imgs.get("visSeg"),
+        isName=True,
+        isRect=True,
+        path=path,
+        prefix=prefix,
+        filename="_seg_ID.png",
+    )
 
 
 def saveH5(grid, path, prefix="GRID"):
     # get path
-    pathH5 = os.path.join(path, prefix+".h5")
+    pathH5 = os.path.join(path, prefix + ".h5")
 
     # create file
     with h5py.File(pathH5, "w"):
@@ -359,7 +450,7 @@ def saveH5(grid, path, prefix="GRID"):
                 key = str(agent.name)
 
                 # get ROI region
-                rgY, rgX = get_valid_range(agent, grid.imgs.get('bin'))
+                rgY, rgX = get_valid_range(agent, grid.imgs.get("bin"))
 
                 # compute kernel
                 imgAll = img[:, rgX, :][rgY, :, :]
@@ -373,15 +464,14 @@ def saveH5(grid, path, prefix="GRID"):
             try:
                 with h5py.File(pathH5, "a") as f:
                     f.create_dataset(key, data=imgFin, compression="gzip")
-                    f.create_dataset(key+"_raw", data=imgAll,
-                                     compression="gzip")
+                    f.create_dataset(key + "_raw", data=imgAll, compression="gzip")
             except Exception as e:
                 print("Failed to save %s" % key)
                 print(e)
 
 
 def saveShape(grid, path, prefix="GRID"):
-    pathDT = os.path.join(path, prefix+"_data.csv")
+    pathDT = os.path.join(path, prefix + "_data.csv")
     pathSp = os.path.join(path, prefix)
 
     # info
@@ -426,11 +516,9 @@ def saveShape(grid, path, prefix="GRID"):
 
                 # polygon
                 bn, bs, bw, be = get_valid_range(
-                    agent, grid.imgs.get('bin'), is_border=True)
-                pts_crop = [[bw, bn],
-                            [be, bn],
-                            [be, bs],
-                            [bw, bs]]
+                    agent, grid.imgs.get("bin"), is_border=True
+                )
+                pts_crop = [[bw, bn], [be, bn], [be, bs], [bw, bs]]
 
                 # recover
                 pts_rec = recover_scale(pts_crop, mat_H)

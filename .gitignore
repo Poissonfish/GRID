@@ -29,3 +29,5 @@ env/*
 test/*
 
 build/*
+.vscode
+

@@ -119,7 +119,7 @@ def rotateBinNdArray(img, angel):
     imgP = np.pad(img, [sizePad, sizePad], 'constant')
 
     # rotate
-    pivot = tuple((np.array(imgP.shape[:2])/2).astype(np.int))
+    pivot = tuple((np.array(imgP.shape[:2])/2).astype(int))
     matRot = cv2.getRotationMatrix2D(pivot, angel, 1.0)
     imgR = cv2.warpAffine(
         imgP.astype(np.float32), matRot, imgP.shape, flags=cv2.INTER_LINEAR).astype(np.int8)

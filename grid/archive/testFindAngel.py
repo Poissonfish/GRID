@@ -29,8 +29,8 @@ grid.map.nCol
 entry = dt[(dt.row == 0) & (dt.col == 1)].iloc[0]
 co = (dt.row == 0) & (dt.col == 1)
 
-entry['row']
-entry['pt']
+entry["row"]
+entry["pt"]
 
 grid.cpuSeg(outplot=True)
 
@@ -47,30 +47,34 @@ def rotateBinNdArray(img, angel):
 
     # padding
     sizePad = max(img.shape)
-    imgP = np.pad(img, [sizePad, sizePad], 'constant')
+    imgP = np.pad(img, [sizePad, sizePad], "constant")
 
     # rotate
-    pivot = tuple((np.array(imgP.shape[:2])/2).astype(np.int))
+    pivot = tuple((np.array(imgP.shape[:2]) / 2).astype(int))
     matRot = cv2.getRotationMatrix2D(pivot, angel, 1.0)
     imgR = cv2.warpAffine(
-        imgP.astype(np.float32), matRot, imgP.shape, flags=cv2.INTER_LINEAR).astype(np.int8)
+        imgP.astype(np.float32), matRot, imgP.shape, flags=cv2.INTER_LINEAR
+    ).astype(np.int8)
 
     # crop
     sigX = np.where(imgR.sum(axis=0) != 0)[0]
     sigY = np.where(imgR.sum(axis=1) != 0)[0]
-    imgC = imgR[sigY[0]:sigY[-1], sigX[0]:sigX[-1]]
+    imgC = imgR[sigY[0] : sigY[-1], sigX[0] : sigX[-1]]
 
     # return
     return imgC
 
+
 def getFourierTransform(sig):
-    sigf = abs(np.fft.fft(sig)/len(sig))
-    return sigf[2:int(len(sigf)/2)]
+    sigf = abs(np.fft.fft(sig) / len(sig))
+    return sigf[2 : int(len(sigf) / 2)]
     # return sigf[2:25]
 
+
 def getCardIntercept(lsValues, angel):
-    coef = 1 if angel == 0 else (1/np.sin(np.pi/180*angel))
-    return lsValues*coef
+    coef = 1 if angel == 0 else (1 / np.sin(np.pi / 180 * angel))
+    return lsValues * coef
+
 
 def getLineABC(slope, intercept):
     if np.isinf(slope):
@@ -83,14 +87,15 @@ def getLineABC(slope, intercept):
         C = -intercept
     return A, B, C
 
+
 def solveLines(slope1, intercept1, slope2, intercept2):
     A1, B1, C1 = getLineABC(slope1, intercept1)
     A2, B2, C2 = getLineABC(slope2, intercept2)
-    D = A1*B2-A2*B1
-    Dx = C1*B2-B1*C2
-    Dy = A1*C2-C1*A2
+    D = A1 * B2 - A2 * B1
+    Dx = C1 * B2 - B1 * C2
+    Dy = A1 * C2 - C1 * A2
     if D != 0:
-        x, y = Dx/D, Dy/D
+        x, y = Dx / D, Dy / D
         return x, y
     else:
         return False
@@ -98,7 +103,7 @@ def solveLines(slope1, intercept1, slope2, intercept2):
 
 img = grid.imgs.get("binSeg")
 
-degRot = range(0, 90+1, 15)
+degRot = range(0, 90 + 1, 15)
 
 # find 2 axes
 sc = []
@@ -110,7 +115,7 @@ for angel in degRot:
 
 
 def plotLine(axes, slope, intercept):
-    if abs(slope) > 1e+9:
+    if abs(slope) > 1e9:
         # vertical line
         y_vals = np.array(axes.get_ylim())
         x_vals = np.repeat(intercept, len(y_vals))
@@ -118,17 +123,18 @@ def plotLine(axes, slope, intercept):
         # usual line
         x_vals = np.array(axes.get_xlim())
         y_vals = intercept + slope * x_vals
-    axes.plot(x_vals, y_vals, '--', color="red")
+    axes.plot(x_vals, y_vals, "--", color="red")
 
 
 def pltCross(x, y, size=3, width=1, color="red"):
-    pt1X = [x-size, x+size]
-    pt1Y = [y-size, y+size]
+    pt1X = [x - size, x + size]
+    pt1Y = [y - size, y + size]
     line1 = Line2D(pt1X, pt1Y, linewidth=width, color=color)
-    pt2X = [x-size, x+size]
-    pt2Y = [y+size, y-size]
+    pt2X = [x - size, x + size]
+    pt2Y = [y + size, y - size]
     line2 = Line2D(pt2X, pt2Y, linewidth=width, color=color)
     return line1, line2
+
 
 # plotting
 fig, ax = plt.subplots()
@@ -144,8 +150,6 @@ for pt in pts:
 plt.show()
 
 
-
-
 # DEMO
 row = 9
 col = 3
@@ -153,17 +157,17 @@ degs = []
 sigs = []
 maxs = []
 for i in range(row):
-    deg = i*15
+    deg = i * 15
     degs.append(deg)
     imgr = rotateBinNdArray(img, deg)
     sigr = imgr.mean(axis=0)
     sigrf = getFourierTransform(sigr)
     sigabs = abs(sigrf)
-    plt.subplot(row, col, 1+i*col+0)
+    plt.subplot(row, col, 1 + i * col + 0)
     plt.imshow(imgr)
-    plt.subplot(row, col, 1+i*col+1)
+    plt.subplot(row, col, 1 + i * col + 1)
     plt.plot(sigr)
-    plt.subplot(row, col, 1+i*col+2)
+    plt.subplot(row, col, 1 + i * col + 2)
     plt.ylim(0, 0.15)
     plt.plot(sigabs)
     sigs.append(round(sum(sigabs), 2))
