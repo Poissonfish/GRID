@@ -31,9 +31,12 @@ the `.whl` names and the commands should be:
 
 ### Installation (Other users)
 
-***Highly recommended install GRID in [Conda](https://poissonfish.github.io/GRID/installation.html) environment***
+***Highly recommended install GRID in [Conda](https://poissonfish.github.io/GRID/ch1_started/installation.html) environment***
 
-```python -m pip install photo_grid```
+```
+conda install rasterio
+python -m pip install photo_grid
+```
 
 ### Launch GRID
 Just type `GRID` (case-sensitive) in your terminal.
