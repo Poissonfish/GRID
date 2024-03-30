@@ -300,7 +300,10 @@ class PnOutputer(QWidget):
 
     def assign_PathOut(self):
         path = QFileDialog().getExistingDirectory(
-            self, "", "", QFileDialog.ShowDirsOnly
+            self,
+            "",
+            "",
+            QFileDialog.Option.ShowDirsOnly,
         )
         self.fd_output.setText(path)
 

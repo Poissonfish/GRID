@@ -274,8 +274,9 @@ class GMap:
             sigMin = np.delete(sigMin, index)
             itcMaj = self.itcs[0]
             itcMin = getCardIntercept(self.sigs[axis], self.angles[axis], self.imgH)
-        self.sigs = np.array([sigMaj, sigMin])
-        self.itcs = np.array([itcMaj, itcMin])
+
+        self.sigs = [sigMaj, sigMin]
+        self.itcs = [itcMaj, itcMin]
 
         # update dataframe
         self.dt = self.getDfCoordinate(self.angles, self.slps, self.itcs)
@@ -285,12 +286,12 @@ class GMap:
         sigMaj = np.array(self.sigs[0])
         sigMaj = np.append(sigMaj, value)
         sigMin = np.array(self.sigs[1])
-        self.sigs = np.array([sigMaj, sigMin])
+        self.sigs = [sigMaj, sigMin]
 
         # update intercept on major axis
         itcMaj = getCardIntercept(self.sigs[0], self.angles[0], self.imgH)
         itcMin = np.array(self.itcs[1])
-        self.itcs = np.array([itcMaj, itcMin])
+        self.itcs = [itcMaj, itcMin]
 
         # update dataframe
         self.dt = self.getDfCoordinate(self.angles, self.slps, self.itcs)
@@ -301,13 +302,13 @@ class GMap:
         sigMaj = np.array(self.sigs[0])
         sigMin = np.array(self.sigs[1])
         sigMin = np.append(sigMin, new_signal)
-        self.sigs = np.array([sigMaj, sigMin])
+        self.sigs = [sigMaj, sigMin]
 
         # intercepts
         itcMaj = np.array(self.itcs[0])
         itcMin = np.array(self.itcs[1])
         itcMin = np.append(itcMin, itc)
-        self.itcs = np.array([itcMaj, itcMin])
+        self.itcs = [itcMaj, itcMin]
 
         # update dataframe
         self.dt = self.getDfCoordinate(self.angles, self.slps, self.itcs)
@@ -319,7 +320,7 @@ class GMap:
         # intercepts
         itcMaj = getCardIntercept(self.sigs[0], self.angles[0], self.imgH)
         itcMin = np.array(self.itcs[1])
-        self.itcs = np.array([itcMaj, itcMin])
+        self.itcs = [itcMaj, itcMin]
 
         # dataframe
         self.dt = self.getDfCoordinate(self.angles, self.slps, self.itcs)
@@ -334,7 +335,7 @@ class GMap:
         # intercept
         itcMaj = np.array(self.itcs[0])
         itcMin = getCardIntercept(self.sigs[1], self.angles[1], self.imgH)
-        self.itcs = np.array([itcMaj, itcMin])
+        self.itcs = [itcMaj, itcMin]
 
         # dataframe
         self.dt = self.getDfCoordinate(self.angles, self.slps, self.itcs)
