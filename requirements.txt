@@ -1,0 +1,5 @@
+h5py
+pyshp
+qdarkstyle
+rasterio
+tqdm
