@@ -14,28 +14,14 @@
 ### [User Manual](https://poissonfish.github.io/GRID/index.html)
 
 ## Get Started
-### Installation (Windows users)
-
-The easiest way to install Rasterio in Windows is to build it from binaries. (see the [official instruction](https://rasterio.readthedocs.io/en/latest/installation.html) for further details)
-
-Please download correct versions of `.whl` from
-[Rasterio](https://www.lfd.uci.edu/~gohlke/pythonlibs/#rasterio) and
-[GDAL](https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal), and use `pip` to install them.
-For example, if you want to run GRID in **64-bit** Windows 10 using Python **3.9**,
-the `.whl` names and the commands should be:
-
-```bash
-    python -m pip install GDAL-3.4.3-cp39-cp39-win_amd64.whl
-    python -m pip install rasterio-1.2.10-cp39-cp39-win_amd64.whl
-```
-
-### Installation (Other users)
-
+### Installation (All users)
 ***Highly recommended install GRID in [Conda](https://poissonfish.github.io/GRID/ch1_started/installation.html) environment***
 
-```
+```bash
+conda create -n grid python==3.11
+conda install gdal
 conda install rasterio
-python -m pip install photo_grid
+python -m pip install photo-grid
 ```
 
 ### Launch GRID
