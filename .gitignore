@@ -28,7 +28,7 @@ docs/source/*
 env/*
 *.npy
 test/*
-
+.DS_Store
 build/*
 **/__pycache__/*
 
