@@ -313,9 +313,9 @@ def rotateBinNdArray(img, angle):
     ver_cv_num = int(ver_cv.replace(".", "")[:3])
     is_old_cv = ver_cv_num < 452
     if is_old_cv:
-        pivot = tuple((np.array(imgP.shape[:2]) / 2).astype(int))
+        pivot = tuple((np.array(imgP.shape[:2]) / 2).astype(np.float32))
     else:
-        pivot = (np.array(imgP.shape[:2]) / 2).astype(int).tolist()
+        pivot = (np.array(imgP.shape[:2]) / 2).astype(np.float32).tolist()
     # rotate images
     matRot = cv2.getRotationMatrix2D(pivot, -angle, 1.0)
     imgR = cv2.warpAffine(imgP, matRot, imgP.shape, flags=cv2.INTER_LINEAR).astype(
