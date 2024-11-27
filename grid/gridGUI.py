@@ -184,7 +184,7 @@ class GRID_GUI(QMainWindow):
                 msg.setIcon(QMessageBox.Icon.Warning)
                 msg.setText("Failed to load files")
                 msg.setInformativeText("No such file or directory")
-                msg.exec_()
+                msg.exec()
             else:
                 self.pnMain.addWidget(panel.value[1](self.grid))
             self.nPanel += 1
