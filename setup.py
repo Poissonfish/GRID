@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="photo_grid",
-    version="1.3.12",
+    version="1.3.13",
     description="A GUI for field segmentation",
     long_description=long_description,
     long_description_content_type="text/markdown",
