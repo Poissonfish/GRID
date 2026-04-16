@@ -39,7 +39,7 @@ def main():
         url = "https://pypi.python.org/pypi/photo_grid/json"
         releases = json.loads(request.urlopen(url).read())["releases"]
         new_version = sorted(releases, key=parse_version, reverse=True)[0]
-        if __version__ != new_version:
+        if parse_version(new_version) > parse_version(__version__):
             # Dialog
             ans = None
             bol_ans = None
@@ -82,7 +82,7 @@ def main():
 
     app = QApplication(sys.argv)
     if "--light" not in sys.argv:
-        app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+        app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt6())
 
     grid = GRID_GUI()
     timer = QTimer()
