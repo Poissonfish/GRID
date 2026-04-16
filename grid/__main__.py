@@ -3,10 +3,9 @@ import subprocess
 import json
 import sys
 from urllib import request
-from pkg_resources import parse_version
+from packaging.version import parse as parse_version
 
 # basic imports
-import sys
 import os
 
 # 3rd party imports

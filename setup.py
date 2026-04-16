@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="photo_grid",
-    version="1.3.13",
+    version="1.3.14",
     description="A GUI for field segmentation",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -46,6 +46,7 @@ setuptools.setup(
         "qdarkstyle",
         # misc
         "tqdm",
+        "packaging",
     ],
     entry_points={"console_scripts": ["GRID=grid.__main__:main"]},
 )
